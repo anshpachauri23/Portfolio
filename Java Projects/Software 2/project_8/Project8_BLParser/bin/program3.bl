@@ -1,0 +1,22 @@
+
+import java.util.*;
+
+PROGRAM Test IS
+
+  INSTRUCTION one IS
+     move
+     turnleft
+  END one
+  
+BEGIN
+  infect
+  WHILE true DO
+    two
+    IF next-is-empty THEN
+      move
+    END IF
+    one
+  END WHILE
+END Test
+
+

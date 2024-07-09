@@ -1,0 +1,22 @@
+PROGRAM BugTerminator IS
+INSTRUCTION kill IS
+    IF next-is-not-friend THEN
+        infect
+    ELSE
+        IF next-is-wall THEN
+            turnright              
+        ELSE
+            IF next-is-friend THEN
+                turnleft
+            ELSE
+                move
+            END IF
+        END IF
+    END IF
+END kill
+
+BEGIN
+    WHILE true DO
+        
+    END WHILE
+END BugTerminator

@@ -1,0 +1,17 @@
+PROGRAM WeAreBorg  IS
+    INSTRUCTION FindSpecies8472 IS
+        WHILE next-is-empty DO
+            infect
+        END WHILE
+    END FindSpecies8472
+
+BEGIN
+    WHILE true DO
+        FindSpecies8472 
+        IF next-is-wall THEN
+            turnleft
+        ELSE
+            move
+        END IF
+    END WHILE
+END WeAreBorg
