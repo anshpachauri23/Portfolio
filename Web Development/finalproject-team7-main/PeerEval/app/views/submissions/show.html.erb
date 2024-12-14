@@ -1,0 +1,52 @@
+<h1 class="text-center mt-4">Submission by: <%= @submission.user.fname %> <%= @submission.user.lname %></h1>
+
+<div class="card shadow-lg p-4 mb-4 bg-white">
+  <h3>Homework Title: <%= @submission.homework.title %></h3>
+  <% if @submission.file.attached? %>
+    <div class="mt-4">
+      <h5>Submitted File:</h5>
+      <% case @submission.file.blob.content_type %>
+      <% when 'application/pdf' %>
+        <%= link_to 'View PDF', url_for(@submission.file), target: '_blank', class: "btn btn-outline-primary" %>
+      <% when /image\// %>
+        <%= image_tag @submission.file, class: 'img-fluid rounded' %>
+      <% else %>
+        <p class="text-danger">Unsupported file type.</p>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">No file attached.</p>
+  <% end %>
+</div>
+
+<!-- Grading Form -->
+<div class="card shadow-lg p-4 mb-4 bg-light">
+  <h4>Grade Submission</h4>
+  <%= form_with(model: [@submission, Grade.new], local: true) do |f| %>
+    <div class="form-group mt-2">
+      <%= f.label :grade, "Grade", class: "form-label" %>
+      <%= f.number_field :grade, class: "form-control" %>
+    </div>
+    <div class="text-center mt-3">
+      <%= f.submit "Submit Grade", class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Comment Form -->
+<div class="card shadow-lg p-4 mb-4 bg-white">
+  <h4>Add a Comment</h4>
+  <%= form_with(model: [@submission, Comment.new], local: true) do |f| %>
+    <div class="form-group mt-2">
+      <%= f.label :content, "Comment", class: "form-label" %>
+      <%= f.text_area :content, class: "form-control", rows: 3 %>
+    </div>
+    <div class="text-center mt-3">
+      <%= f.submit "Add Comment", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<p class="text-center mt-4">
+  <%= link_to 'Back to Submissions', view_submissions_student_dashboard_path, class: "btn btn-secondary" %>
+</p>

@@ -1,0 +1,38 @@
+<%= form_with(model: course) do |form| %>
+  <% if course.errors.any? %>
+    <div style="color: red">
+      <!-- Display validation errors if any -->
+      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% course.errors.each do |error| %>
+          <li><%= error.full_message %></li> <!-- Display each error message -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <!-- Course name field -->
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <!-- Course semester field -->
+    <%= form.label :semester, style: "display: block" %>
+    <%= form.text_field :semester %>
+  </div>
+
+  <div>
+    <!-- Hidden instructor ID field -->
+     <%= form.hidden_field :instructor_id, value: current_user.id %>
+  </div>
+
+  <div>
+    <!-- Submit button -->
+     <%= form.submit "Save and Add Students", class: "btn btn-primary" %>
+  </div>
+
+
+<% end %>

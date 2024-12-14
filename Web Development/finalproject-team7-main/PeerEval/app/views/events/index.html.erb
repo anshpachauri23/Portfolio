@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Events" %>
+
+<h1>Events</h1>
+
+<div id="events">
+  <% @events.each do |event| %>
+    <%= render event %>
+    <p>
+      <!-- Link to show all events for the event's course -->
+      <%= link_to "Show this event", course_events_path(course_id: event.course_id) %>
+    </p>
+  <% end %>
+</div>
+
+<!-- Link to create a new event -->
+<%= link_to "New event", new_course_event_path %>

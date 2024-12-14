@@ -1,0 +1,25 @@
+<%= form_with(model: [@course, @event]) do |form| %>
+  <% if @event.errors.any? %>
+    <div style="color: red">
+      <!-- Display error messages if validation fails -->
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+        <% @event.errors.each do |error| %>
+          <li><%= @error.full_message %></li> <!-- Show each error -->
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <!-- Event name input -->
+    <%= form.label :ename, style: "display: block" %>
+    <%= form.text_field :ename %>
+  </div>
+
+  <div>
+    <!-- Submit button -->
+    <%= form.submit %>
+  </div>
+<% end %>

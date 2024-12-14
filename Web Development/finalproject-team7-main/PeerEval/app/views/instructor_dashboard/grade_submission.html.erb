@@ -1,0 +1,77 @@
+<h1>Grade Submission for: <%= @submission.homework.title %></h1>
+
+<div class="card shadow-lg p-4 mb-4 bg-white">
+  <div class="mt-4">
+    <h3>Submission Details</h3>
+    <!-- Display student name -->
+    <p><strong>Submitted by:</strong> <%= @submission.user.fname %> <%= @submission.user.lname %></p>
+    <% if @submission.file.attached? %>
+    <!-- Handle different file types -->
+      <p><strong>Submitted File:</strong></p>
+      <% if @submission.file.blob.content_type == "application/pdf" %>
+        <%= link_to 'View PDF', url_for(@submission.file), target: '_blank' %>
+        <embed src="<%= url_for(@submission.file) %>" type="application/pdf" width="100%" height="500px">
+      <% elsif @submission.file.blob.content_type.start_with?('image/') %>
+        <%= image_tag @submission.file, class: 'img-fluid' %>
+      <% elsif ["application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.ms-powerpoint"].include?(@submission.file.blob.content_type) %>
+        <%= link_to 'Download Presentation', url_for(@submission.file) %>
+      <% elsif ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].include?(@submission.file.blob.content_type) %>
+        <%= link_to 'Download Word Document', url_for(@submission.file) %>
+      <% elsif @submission.file.blob.content_type == "text/plain" %>
+        <%= link_to 'View Text File', url_for(@submission.file), target: '_blank' %>
+      <% else %>
+        <p>Unsupported file type.</p>
+      <% end %>
+    <% else %>
+      <p>No file submitted.</p>
+    <% end %>
+  </div>
+
+    <h3 class="mt-4">Student Comments and Grades</h3>
+ <% if @submission.comments.any? || @submission.grades.any? %>
+  <ul class="list-group">
+    <% @submission.comments.group_by(&:user_id).each do |user_id, comments| %>
+      <% user = User.find(user_id) %>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <div>
+            <!-- Display comments from students -->
+            <p><strong>Student:</strong> <%= user.fname %> <%= user.lname %></p>
+
+            <% comments.each do |comment| %>
+              <p><strong>Comment:</strong> <%= comment.content %></p>
+              <small class="text-muted">Added on <%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
+            <% end %>
+          </div>
+          <div class="text-end">
+            <!-- Display grade if available -->
+            <% grade = @submission.grades.find_by(user_id: user_id) %>
+            <% if grade %>
+              <p><strong>Grade:</strong> <%= grade.grade %> / 100</p>
+              <small class="text-muted">Graded on <%= grade.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
+            <% else %>
+              <p class="text-muted">No grade assigned yet.</p>
+            <% end %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">No comments or grades yet.</p>
+<% end %>
+
+
+  <!-- Form to update grade and feedback -->
+  <%= form_with model: @submission, url: update_grade_path(@submission), local: true do |f| %>
+    <div class="form-group mt-4">
+      <%= f.label :grade, "Grade (Instructor)" %>
+      <%= f.text_field :grade, class: "form-control" %>
+    </div>
+    <div class="form-group mt-3">
+      <%= f.label :feedback, "Feedback (Instructor)" %>
+      <%= f.text_area :feedback, class: "form-control" %>
+    </div>
+    <%= f.submit "Update Grade", class: "btn btn-success mt-4" %>
+  <% end %>
+</div>

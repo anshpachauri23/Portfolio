@@ -1,0 +1,29 @@
+<div class="container-fluid d-flex justify-content-center align-items-start mt-4" style="background-color: #f8f9fa;">
+  <div class="text-center bg-white p-4 rounded shadow-lg w-75">
+    <h1 class="display-4">Presentation Evaluation Dashboard</h1>
+    <div class="row mt-4">
+
+      <!-- Student Actions Section -->
+      <div class="col-md-6 mb-4">
+        <div class="card text-white bg-success rounded shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Student Actions</h5>
+            <p class="card-text">View and evaluate presentations by your peers.</p>
+            <%= link_to 'Evaluate Presentations', presentations_path, class: 'btn btn-light btn-lg' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ongoing Presentations Section -->
+      <div class="col-md-6 mb-4">
+        <div class="card bg-light rounded shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Ongoing Presentations</h5>
+            <p class="card-text">There are no ongoing presentations at the moment.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

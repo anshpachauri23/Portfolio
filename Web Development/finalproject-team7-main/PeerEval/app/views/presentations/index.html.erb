@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <h2>Presentations</h2>
+  <% if @presentations.any? %>
+  <!-- List of presentations -->
+    <div class="list-group">
+      <% @presentations.each do |presentation| %>
+        <a href="<%= presentation_path(presentation) %>" class="list-group-item list-group-item-action">
+          <!-- Presentation title -->
+          <h5 class="mb-1"><%= presentation.title %></h5>
+          <!-- Presenter name -->
+          <small>Presented by: <%= presentation.presenter.name %></small>
+        </a>
+      <% end %>
+    </div>
+  <% else %>
+  <!-- Message if no presentations -->
+    <p>No presentations available.</p>
+  <% end %>
+</div>

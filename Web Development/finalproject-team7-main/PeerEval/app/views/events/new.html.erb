@@ -1,0 +1,13 @@
+<% content_for :title, "New event" %>
+
+<h1>New event</h1>
+
+<!-- Render the shared form partial for creating a new event -->
+<%= render "form", event: @event %>
+
+<br>
+
+<div>
+  <!-- Link to go back to the events list -->
+  <%= link_to "Back to events", course_events_path %>
+</div>
