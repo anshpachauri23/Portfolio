@@ -104,14 +104,16 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 ### 🔧 Systems Programming
 
-#### [Assembly Language Projects](C%20and%20Assembly%20language%20projects/)
-- **Technology**: x86-64 Assembly, C Programming
-- **Projects**:
-  - Vector operations and mathematical computations
-  - Bit manipulation utilities
-  - Prime number algorithms
-  - Sorting algorithms implementation
-- **Impact**: Deep understanding of low-level system operations
+#### [C and Assembly Language Projects](C%20and%20Assembly%20language%20projects/)
+- **Technology**: C Programming, x86-64 Assembly Language
+- **Projects** (6 comprehensive projects):
+  - **Mathematical Integration System**: Numerical integration using rectangle approximation for x² function
+  - **Bit Manipulation Utilities**: Pattern matching, bit counting, and file processing with conditional logic
+  - **Word Search Matrix**: 8-directional word search in 2D character matrices with boundary validation
+  - **Course Management System**: Dynamic memory management with comprehensive tracking and sorting
+  - **Assembly Language Programming**: Vector operations, prime counting, and system calls
+  - **Vector Sorting Algorithm**: Assembly sorting implementation with I/O operations and stack management
+- **Impact**: Deep understanding of low-level system operations, memory management, and computer architecture
 
 ### 📊 MATLAB Projects
 

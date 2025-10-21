@@ -20,10 +20,13 @@
 - **[Mathematical Computing](Java%20Projects/Software%201/)** - Newton's method, natural number arithmetic
 - **[String Algorithms](Java%20Projects/Software%201/project_9/)** - Fragment reassembly, optimization
 
-### 🔧 Systems Programming
-- **[Assembly Language Projects](C%20and%20Assembly%20language%20projects/)** - x86-64 Assembly, C Programming
-- **[Vector Operations](C%20and%20Assembly%20language%20projects/Project_5/)** - Mathematical Computations
-- **[Bit Manipulation](C%20and%20Assembly%20language%20projects/Project_2/)** - Low-level Programming
+### 🔧 Systems Programming (6 Projects)
+- **[Mathematical Integration System](C%20and%20Assembly%20language%20projects/Project_1/)** - Numerical integration for x² function
+- **[Bit Manipulation Utilities](C%20and%20Assembly%20language%20projects/Project_2/)** - Pattern matching, bit counting, file processing
+- **[Word Search Matrix](C%20and%20Assembly%20language%20projects/Project_3/)** - 8-directional word search in 2D matrices
+- **[Course Management System](C%20and%20Assembly%20language%20projects/Project_4/)** - Dynamic memory management with tracking
+- **[Assembly Language Programming](C%20and%20Assembly%20language%20projects/Project_5/)** - Vector operations, prime counting, system calls
+- **[Vector Sorting Algorithm](C%20and%20Assembly%20language%20projects/Project_6/)** - Assembly sorting with I/O operations
 
 ### 📊 MATLAB & Signal Processing
 - **[Game Development](MATLAB%20projects/)** - Custom Game Engine
@@ -33,12 +36,14 @@
 
 ### Technical Achievements
 - **26+ Java Projects** demonstrating advanced software engineering
+- **6 Systems Programming Projects** with C and Assembly language expertise
 - **90%+ Accuracy** in AI/ML models
 - **600+ Training Images** processed for computer vision
 - **35% Reduction** in submission errors (PeerEval platform)
 - **10+ Hours/Month** saved through automation (Deloitte internship)
 - **Complete Compiler Pipeline** from lexical analysis to execution
 - **Advanced Data Structures** with custom implementations
+- **Low-level Programming** with memory management and bit manipulation
 
 ### Technology Stack Coverage
 - **Frontend**: React.js, Next.js, HTML5, CSS3, JavaScript, TypeScript
