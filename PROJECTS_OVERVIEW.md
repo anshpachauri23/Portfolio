@@ -1,0 +1,82 @@
+# Projects Overview
+
+## 🌟 Featured Projects
+
+### 🤖 AI/ML & Computer Vision
+- **[Ageing Sign Detection System](Python%20Projects%20incorporating%20AI/Ageing%20Sign%20Batch%204%20Major%20Project/)** - TensorFlow, EfficientNet, OpenCV
+- **[Traffic Sign Detector](Python%20Projects%20incorporating%20AI/Traffic%20Sign%20Detector/)** - Computer Vision, Deep Learning
+- **[Corona Mask Detector](Python%20Projects%20incorporating%20AI/Corona%20Mask%20Detector/)** - Real-time Detection
+
+### 🌐 Full-Stack Web Applications
+- **[PeerEval - Presentation Platform](Web%20Development/finalproject-team7-main/)** - Ruby on Rails, MySQL
+- **[E-commerce Platform](https://github.com/anshpachauri23/Portfolio)** - React.js, Node.js, AWS Lambda, DynamoDB
+- **[RecipeShare - Social Network](https://github.com/anshpachauri23/Portfolio)** - Next.js, TypeScript, Go, PostgreSQL
+
+### ☕ Java Applications
+- **[Natural Number Calculator](Java%20Projects/Software%201/project_11/)** - MVC Architecture, GUI Development
+- **[RSS Aggregator](Java%20Projects/Software%201/project_5/)** - XML Processing, Web Scraping
+- **[Cryptographic Utilities](Java%20Projects/Software%201/project_8/)** - Security, Encryption
+- **[Core Language Interpreter](https://github.com/anshpachauri23/Portfolio)** - Lexical Analysis, Parsing
+
+### 🔧 Systems Programming
+- **[Assembly Language Projects](C%20and%20Assembly%20language%20projects/)** - x86-64 Assembly, C Programming
+- **[Vector Operations](C%20and%20Assembly%20language%20projects/Project_5/)** - Mathematical Computations
+- **[Bit Manipulation](C%20and%20Assembly%20language%20projects/Project_2/)** - Low-level Programming
+
+### 📊 MATLAB & Signal Processing
+- **[Game Development](MATLAB%20projects/)** - Custom Game Engine
+- **[Signal Processing](MATLAB%20projects/)** - Mathematical Modeling
+
+## 🎯 Project Impact Metrics
+
+### Technical Achievements
+- **15+ Software Projects** across multiple domains
+- **90%+ Accuracy** in AI/ML models
+- **600+ Training Images** processed for computer vision
+- **35% Reduction** in submission errors (PeerEval platform)
+- **10+ Hours/Month** saved through automation (Deloitte internship)
+
+### Technology Stack Coverage
+- **Frontend**: React.js, Next.js, HTML5, CSS3, JavaScript, TypeScript
+- **Backend**: Node.js, Go, Ruby on Rails, Express.js
+- **Cloud**: AWS (Lambda, S3, RDS, DynamoDB, API Gateway, Bedrock)
+- **AI/ML**: TensorFlow, Keras, OpenCV, scikit-learn
+- **Databases**: MySQL, PostgreSQL, DynamoDB
+- **Languages**: Python, Java, JavaScript, Go, Ruby, C/C++, Assembly
+
+## 🚀 Deployment & Live Demos
+
+### Available Live Projects
+- **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+- **E-commerce Platform**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
+- **RecipeShare**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
+
+### Local Development Projects
+- **PeerEval**: Ruby on Rails application with setup instructions
+- **AI/ML Projects**: Jupyter notebooks and Python scripts
+- **Java Applications**: Complete source code with documentation
+- **Assembly Projects**: C and Assembly language implementations
+
+## 📈 Learning Outcomes
+
+### Problem-Solving Skills
+- **End-to-End Development**: From concept to deployment
+- **Performance Optimization**: Database queries, algorithm efficiency
+- **User Experience**: Intuitive interfaces and user flows
+- **Security**: Authentication, authorization, data protection
+
+### Technical Depth
+- **Full-Stack Development**: Frontend and backend integration
+- **Machine Learning**: Model training, optimization, and deployment
+- **Systems Programming**: Low-level programming and optimization
+- **Cloud Computing**: AWS services and serverless architecture
+
+### Professional Development
+- **Team Collaboration**: Agile development and project management
+- **Code Quality**: Testing, documentation, and best practices
+- **Continuous Learning**: New technologies and frameworks
+- **Leadership**: Project management and peer mentoring
+
+---
+
+*This overview showcases the breadth and depth of technical projects across multiple domains, demonstrating versatility and expertise in modern software development.*

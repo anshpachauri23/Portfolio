@@ -39,13 +39,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_013207) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "class_to_students", force: :cascade do |t|
-    t.integer "class_id"
-    t.integer "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.integer "submission_id"
     t.integer "user_id"
