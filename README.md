@@ -45,16 +45,34 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 ### 🌐 Recent Full-Stack Projects
 
+#### [Personal Portfolio Website](personal-portfolio-website-main/) (React, Next.js, TypeScript, Tailwind CSS)
+- **Technology**: React 18, Next.js 14, TypeScript, Tailwind CSS, Vite, Lucide React, Radix UI
+- **Description**: Modern, responsive portfolio website showcasing professional experience, projects, and skills
+- **Features**:
+  - Responsive design with mobile-first approach
+  - Interactive project showcase with detailed descriptions
+  - Professional experience timeline and achievements
+  - Contact form and social media integration
+  - Optimized performance with Vite build system
+- **Impact**: Professional online presence with modern UI/UX design
+
+#### [RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/) (Next.js, TypeScript, Go, PostgreSQL, AWS S3)
+- **Technology**: Next.js 14, TypeScript, Go, Gin Framework, PostgreSQL, AWS S3, JWT Authentication
+- **Description**: Full-stack social media platform for sharing and discovering recipes with Instagram-like features
+- **Features**:
+  - User authentication with JWT tokens and secure password hashing
+  - Recipe sharing with multiple images and step-by-step instructions
+  - Social features: like posts, comment, follow users, real-time notifications
+  - Profile management with photo uploads and bio editing
+  - Personalized feed with followed users' content
+  - AWS S3 integration for scalable image storage
+  - Responsive design with Tailwind CSS
+- **Impact**: Complete social media platform demonstrating full-stack development skills
+
 #### [E-commerce Platform](https://github.com/anshpachauri23/Portfolio) (React.js, Node.js, AWS Lambda, DynamoDB)
 - Developed and deployed backend infrastructure (Node.js, AWS Lambda/DynamoDB) powering all business logic
 - Built complete buying workflow (user checkout, details, confirmation) and contacts page
 - Improved core UI for optimal user experience
-
-#### [RecipeShare - Social Recipe Network](https://github.com/anshpachauri23/Portfolio) (Next.js, TypeScript, Go, PostgreSQL, AWS S3/RDS)
-- Built Instagram-inspired social media platform for recipes with account sign up/login, follow system
-- Implemented real-time notifications, commenting, liking, and profile management
-- Engineered advanced features including post creation, user/post search, scalable backend APIs (Go, PostgreSQL)
-- Integrated secure JWT authentication, AWS S3 media storage, and responsive UI with Next.js and Tailwind CSS
 
 #### [Core Language Interpreter](https://github.com/anshpachauri23/Portfolio) (Java)
 - Designed and implemented comprehensive interpreter with lexical analysis, parsing, and recursive-descent execution
@@ -165,6 +183,8 @@ Portfolio/
 ├── CONTACT.md                   # Contact information and availability
 ├── SKILLS.md                    # Technical skills and achievements
 ├── PROJECTS_OVERVIEW.md         # Comprehensive project showcase
+├── personal-portfolio-website-main/    # React/Next.js Portfolio Website
+├── recipe-socialMedia-personal-main/  # Full-Stack Social Media Platform
 ├── Ageing Sign Detection Project/    # AI/ML & Computer Vision
 ├── AI class projects/           # AI Coursework & Machine Learning
 ├── PeerEval/                    # Full-stack Web Application (Ruby on Rails)
