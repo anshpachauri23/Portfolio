@@ -7,9 +7,10 @@
 - **[AI Class Projects](AI%20class%20projects/)** - Search Algorithms, Machine Learning, NLP, Neural Networks
 
 ### 🌐 Full-Stack Web Applications
+- **[Personal Portfolio Website](personal-portfolio-website-main/)** - React 18, Next.js 14, TypeScript, Tailwind CSS
+- **[RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/)** - Next.js 14, TypeScript, Go, PostgreSQL, AWS S3
 - **[PeerEval - Presentation Platform](PeerEval/)** - Ruby on Rails, MySQL
 - **[E-commerce Platform](https://github.com/anshpachauri23/Portfolio)** - React.js, Node.js, AWS Lambda, DynamoDB
-- **[RecipeShare - Social Network](https://github.com/anshpachauri23/Portfolio)** - Next.js, TypeScript, Go, PostgreSQL
 
 ### ☕ Java Applications (26 Projects)
 - **[Natural Number Calculator](Java%20Projects/Software%201/project_11/)** - ⭐ RPN Calculator with MVC Architecture
@@ -59,9 +60,9 @@
 ## 🚀 Deployment & Live Demos
 
 ### Available Live Projects
-- **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+- **Personal Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+- **RecipeShare - Social Recipe Network**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
 - **E-commerce Platform**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
-- **RecipeShare**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
 
 ### Local Development Projects
 - **PeerEval**: Ruby on Rails application with setup instructions
