@@ -3,20 +3,22 @@
 ## 🌟 Featured Projects
 
 ### 🤖 AI/ML & Computer Vision
-- **[Ageing Sign Detection System](Python%20Projects%20incorporating%20AI/Ageing%20Sign%20Batch%204%20Major%20Project/)** - TensorFlow, EfficientNet, OpenCV
-- **[Traffic Sign Detector](Python%20Projects%20incorporating%20AI/Traffic%20Sign%20Detector/)** - Computer Vision, Deep Learning
-- **[Corona Mask Detector](Python%20Projects%20incorporating%20AI/Corona%20Mask%20Detector/)** - Real-time Detection
+- **[Ageing Sign Detection System](Ageing%20Sign%20Detection%20Project/)** - TensorFlow, EfficientNet, OpenCV
 
 ### 🌐 Full-Stack Web Applications
-- **[PeerEval - Presentation Platform](Web%20Development/finalproject-team7-main/)** - Ruby on Rails, MySQL
+- **[PeerEval - Presentation Platform](PeerEval/)** - Ruby on Rails, MySQL
 - **[E-commerce Platform](https://github.com/anshpachauri23/Portfolio)** - React.js, Node.js, AWS Lambda, DynamoDB
 - **[RecipeShare - Social Network](https://github.com/anshpachauri23/Portfolio)** - Next.js, TypeScript, Go, PostgreSQL
 
-### ☕ Java Applications
-- **[Natural Number Calculator](Java%20Projects/Software%201/project_11/)** - MVC Architecture, GUI Development
-- **[RSS Aggregator](Java%20Projects/Software%201/project_5/)** - XML Processing, Web Scraping
-- **[Cryptographic Utilities](Java%20Projects/Software%201/project_8/)** - Security, Encryption
-- **[Core Language Interpreter](https://github.com/anshpachauri23/Portfolio)** - Lexical Analysis, Parsing
+### ☕ Java Applications (26 Projects)
+- **[Natural Number Calculator](Java%20Projects/Software%201/project_11/)** - ⭐ RPN Calculator with MVC Architecture
+- **[RSS Aggregator](Java%20Projects/Software%201/project_5/)** - ⭐ Advanced RSS aggregation with XML processing
+- **[Cryptographic Utilities](Java%20Projects/Software%201/project_8/)** - ⭐ Comprehensive cryptographic library
+- **[Complete Compiler Series](Java%20Projects/Principles%20of%20Programming/)** - Lexical analysis, parsing, interpretation
+- **[Advanced Data Structures](Java%20Projects/Software%202/)** - Hash tables, BST, linked lists, heap sort
+- **[Text Processing Tools](Java%20Projects/Software%202/)** - Word frequency analysis, tag cloud generation
+- **[Mathematical Computing](Java%20Projects/Software%201/)** - Newton's method, natural number arithmetic
+- **[String Algorithms](Java%20Projects/Software%201/project_9/)** - Fragment reassembly, optimization
 
 ### 🔧 Systems Programming
 - **[Assembly Language Projects](C%20and%20Assembly%20language%20projects/)** - x86-64 Assembly, C Programming
@@ -30,11 +32,13 @@
 ## 🎯 Project Impact Metrics
 
 ### Technical Achievements
-- **15+ Software Projects** across multiple domains
+- **26+ Java Projects** demonstrating advanced software engineering
 - **90%+ Accuracy** in AI/ML models
 - **600+ Training Images** processed for computer vision
 - **35% Reduction** in submission errors (PeerEval platform)
 - **10+ Hours/Month** saved through automation (Deloitte internship)
+- **Complete Compiler Pipeline** from lexical analysis to execution
+- **Advanced Data Structures** with custom implementations
 
 ### Technology Stack Coverage
 - **Frontend**: React.js, Next.js, HTML5, CSS3, JavaScript, TypeScript

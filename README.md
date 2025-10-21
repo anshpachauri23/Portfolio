@@ -63,7 +63,7 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 ### 🤖 AI/ML Projects
 
-#### [Ageing Sign Detection System](Python%20Projects%20incorporating%20AI/Ageing%20Sign%20Batch%204%20Major%20Project/)
+#### [Ageing Sign Detection System](Ageing%20Sign%20Detection%20Project/)
 - **Technology**: TensorFlow, EfficientNet, OpenCV, dlib
 - **Description**: Computer vision system that detects and localizes aging signs (wrinkles, dark spots, puffy eyes) on facial images
 - **Features**: 
@@ -73,17 +73,10 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
   - Multiple deployment options (Colab, Jupyter, Python scripts)
 - **Impact**: Developed a complete ML pipeline with 600+ training images
 
-#### [Traffic Sign Detector](Python%20Projects%20incorporating%20AI/Traffic%20Sign%20Detector/)
-- **Technology**: Computer Vision, Deep Learning
-- **Description**: Automated traffic sign recognition system for autonomous vehicle applications
-
-#### [Corona Mask Detector](Python%20Projects%20incorporating%20AI/Corona%20Mask%20Detector/)
-- **Technology**: Computer Vision, Real-time Detection
-- **Description**: COVID-19 safety compliance system for mask detection
 
 ### 🌐 Web Development
 
-#### [PeerEval - Presentation Evaluation Platform](Web%20Development/finalproject-team7-main/)
+#### [PeerEval - Presentation Evaluation Platform](PeerEval/)
 - **Technology**: Ruby on Rails, HTML5, CSS3, JavaScript, SQL
 - **Description**: Full-stack web application for classroom presentation evaluation and feedback collection
 - **Features**:
@@ -160,8 +153,8 @@ Portfolio/
 ├── CONTACT.md                   # Contact information and availability
 ├── SKILLS.md                    # Technical skills and achievements
 ├── PROJECTS_OVERVIEW.md         # Comprehensive project showcase
-├── Python Projects incorporating AI/    # AI/ML & Computer Vision
-├── Web Development/             # Full-stack Web Applications  
+├── Ageing Sign Detection Project/    # AI/ML & Computer Vision
+├── PeerEval/                    # Full-stack Web Application (Ruby on Rails)
 ├── Java Projects/               # Java Applications & Software Engineering
 ├── C and Assembly language projects/     # Systems Programming
 ├── MATLAB projects/             # Signal Processing & Game Development
