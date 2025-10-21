@@ -4,6 +4,7 @@
 
 ### 🤖 AI/ML & Computer Vision
 - **[Ageing Sign Detection System](Ageing%20Sign%20Detection%20Project/)** - TensorFlow, EfficientNet, OpenCV
+- **[AI Class Projects](AI%20class%20projects/)** - Search Algorithms, Machine Learning, NLP, Neural Networks
 
 ### 🌐 Full-Stack Web Applications
 - **[PeerEval - Presentation Platform](PeerEval/)** - Ruby on Rails, MySQL
@@ -37,8 +38,10 @@
 ### Technical Achievements
 - **26+ Java Projects** demonstrating advanced software engineering
 - **6 Systems Programming Projects** with C and Assembly language expertise
+- **4 AI Coursework Projects** covering search algorithms, machine learning, NLP, and neural networks
 - **90%+ Accuracy** in AI/ML models
 - **600+ Training Images** processed for computer vision
+- **74%+ Accuracy** in sentiment analysis (Naive Bayes classification)
 - **35% Reduction** in submission errors (PeerEval platform)
 - **10+ Hours/Month** saved through automation (Deloitte internship)
 - **Complete Compiler Pipeline** from lexical analysis to execution

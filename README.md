@@ -73,6 +73,16 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
   - Multiple deployment options (Colab, Jupyter, Python scripts)
 - **Impact**: Developed a complete ML pipeline with 600+ training images
 
+#### [AI Class Projects](AI%20class%20projects/)
+- **Technology**: Python, NumPy, Matplotlib, Machine Learning
+- **Description**: Comprehensive AI coursework covering fundamental algorithms and machine learning techniques
+- **Projects** (4 major assignments):
+  - **Search Algorithms**: DFS, BFS, UCS, A* implementation using Pacman framework
+  - **Linear Regression**: Polynomial feature transformation with overfitting analysis
+  - **Naive Bayes Classification**: Sentiment analysis on Twitter data with 74%+ accuracy
+  - **Logistic Regression & Perceptron**: Binary classification on fMRI brain data
+- **Impact**: Demonstrated expertise in search algorithms, machine learning, NLP, and neural networks
+
 
 ### 🌐 Web Development
 
@@ -156,6 +166,7 @@ Portfolio/
 ├── SKILLS.md                    # Technical skills and achievements
 ├── PROJECTS_OVERVIEW.md         # Comprehensive project showcase
 ├── Ageing Sign Detection Project/    # AI/ML & Computer Vision
+├── AI class projects/           # AI Coursework & Machine Learning
 ├── PeerEval/                    # Full-stack Web Application (Ruby on Rails)
 ├── Java Projects/               # Java Applications & Software Engineering
 ├── C and Assembly language projects/     # Systems Programming
