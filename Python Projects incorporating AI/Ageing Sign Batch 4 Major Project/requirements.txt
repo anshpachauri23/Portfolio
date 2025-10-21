@@ -1,8 +1,0 @@
-tensorflow==2.4.1
-tensorflow-base==2.4.1
-tensorflow-estimator==2.4.1
-scikit-learn
-cv2
-dlib
-keras
-imutils
