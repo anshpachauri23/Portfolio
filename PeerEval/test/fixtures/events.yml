@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ename: MyString
+  course_id: 1
+
+two:
+  ename: MyString
+  course_id: 1

@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  
+
+  <% if @comments.present? %>
+    <div class="table-responsive mt-4">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Comment</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @comments.each do |comment| %>
+            <% user = User.find(comment.user_id) %> <!-- Fetch the user associated with the comment -->
+            <% grade = Grade.find_by(submission_id: @submission.id, user_id: comment.user_id) %> <!-- Find the grade for the same user -->
+            <tr>
+              <td><%= user.fname %> <%= user.lname %></td> <!-- Student Name -->
+              <td><%= comment.content %></td> <!-- Comment -->
+              <td><%= grade.present? ? grade.grade : 'N/A' %></td> <!-- Score or 'N/A' -->
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-muted mt-4">No comments or scores available for this submission.</p>
+  <% end %>
+
+  <%= link_to 'Go Back', 'javascript:history.back()', class: 'btn btn-secondary' %>
+
+</div>

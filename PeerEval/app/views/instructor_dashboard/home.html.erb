@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 mb-4 bg-white">
+    <h1 class="display-4">Instructor Dashboard</h1>
+    
+    <h3 class="mt-4">Available Homework</h3>
+    <% if @homeworks.any? %>
+    <!-- List of homework -->
+      <div class="list-group mt-3">
+        <% @homeworks.each do |homework| %>
+          <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1"><%= homework.title %></h5>
+              <small>Due: <%= homework.due_date.strftime("%b %d, %Y %I:%M %p") %></small>
+            </div>
+            <p class="mb-1"><%= homework.description %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+    <!-- Message if no homework exists -->
+      <p class="lead mt-3">No homework created yet.</p>
+    <% end %>
+
+
+    <!-- Link to create new homework -->
+    <%= link_to 'Create New Homework', new_homework_path(course_id: @course.id), class: 'btn btn-primary mt-4' %>
+  </div>
+
+  <div class="card shadow-lg p-4 mb-4 bg-white">
+    <h3 class="mt-4">Student Submissions</h3>
+    
+    <% if @submissions.any? %>
+    <!-- List of submissions -->
+      <div class="list-group mt-3">
+        <% @submissions.each do |submission| %>
+          <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Homework: <%= submission.homework.title %></h5>
+              <small>Submitted by: <%= submission.user.fname %> <%= submission.user.lname %></small>
+            </div>
+            <p class="mb-1">Feedback: <%= submission.feedback.present? ? submission.feedback : 'Not graded yet' %></p>
+            <div class="mt-2">
+              <!-- Link to grade submission -->
+              <%= link_to 'View & Grade Submission', grade_submission_path(submission), class: 'btn btn-primary' %>
+            </div>
+            <div class="mt-2">
+              <!-- Link to view student feedback -->
+              <%= link_to 'View Student Feedback', feedback_path(submission_id: submission.id) , class: 'btn btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+    <!-- Message if no submissions exist -->
+      <p class="lead mt-3">No submissions available at the moment.</p>
+    <% end %>
+  </div>
+</div>

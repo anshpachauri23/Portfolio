@@ -1,0 +1,10 @@
+WHILE True:
+  move()
+  IF random:
+    turnleft()
+    infect()
+  ELSE:
+    go-for-it
+    turnright()
+    look-for-something()
+  skip()

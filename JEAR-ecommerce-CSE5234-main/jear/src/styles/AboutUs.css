@@ -1,0 +1,143 @@
+.about-container {
+    padding: 4rem 1rem;
+    color: #222;
+    font-family: "Inter", "Poppins", sans-serif;
+  }
+  
+  .about-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .about-header h1 {
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .about-header p {
+    color: #6c757d;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .about-section {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .about-section:hover {
+    transform: translateY(-4px);
+  }
+  
+  .about-section h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .about-section p {
+    color: #555;
+  }
+  
+  .about-strategy {
+    text-align: center;
+    max-width: 800px;
+    margin: 4rem auto;
+  }
+  
+  .about-strategy h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .about-strategy p {
+    color: #555;
+    font-size: 1.1rem;
+  }
+  
+  .executives-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .executives-header h2 {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  
+  .executives-header p {
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+  
+  .executive-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .executive-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .executive-card img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .executive-card h5 {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  
+  .executive-card p {
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .executive-card .text-primary {
+    color: #1d3557 !important;
+    font-weight: 500;
+  }
+  
+  .about-closing {
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  .about-closing h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .about-closing p {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 768px) {
+    .about-header h1 {
+      font-size: 2.2rem;
+    }
+  
+    .executive-card img {
+      height: 250px;
+    }
+  }
+
+  .about-banner img {
+    max-height: 400px; /* Optional: limits the height */
+    object-fit: cover;  /* Ensures image fills the area without stretching */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  

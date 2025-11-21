@@ -1,0 +1,27 @@
+<h1>Course Details</h1>
+
+<p><strong>Name:</strong> <%= @course.name %></p>
+<p><strong>Semester:</strong> <%= @course.semester %></p>
+<p><strong>Instructor ID:</strong> <%= @course.instructor_id %></p>
+
+<h3>Students Enrolled:</h3>
+<ul>
+  <% if @course.students.present? %>
+    <% @course.students.each do |student_id| %>
+      <% student = User.find_by(id: student_id) %> <!-- Fetch the user record -->
+      <% if student %> <!-- Check if student exists -->
+        <li>Student Name: <%= student.fname %> <%= student.lname %></li>
+      <% else %>
+        <li>Student record not found</li>
+      <% end %>
+    <% end %>
+  <% else %>
+    <li>No students enrolled yet.</li>
+  <% end %>
+</ul>
+<div class="d-flex gap-2 mt-4">
+  <%= link_to 'Back to Classes', courses_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Edit', edit_course_path(@course), class: 'btn btn-primary' %>
+</div>
+
+

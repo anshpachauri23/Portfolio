@@ -1,0 +1,15 @@
+WHILE true DO
+    IF next-is-not-friend THEN
+        infect
+    ELSE
+        IF next-is-wall THEN
+            turnright              
+        ELSE
+            IF next-is-friend THEN
+                turnleft
+            ELSE
+                move
+            END IF
+        END IF
+    END IF
+END WHILE

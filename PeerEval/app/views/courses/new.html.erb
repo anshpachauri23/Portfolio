@@ -1,0 +1,65 @@
+<h1><%= action_name.capitalize %> Course</h1>
+
+<%= form_with(model: @course, local: true) do |form| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+        <% @course.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Course Name -->
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <!-- Course Semester -->
+  <div class="field">
+    <%= form.label :semester %>
+    <%= form.text_field :semester %>
+  </div>
+
+  <!-- Hidden Instructor ID -->
+  <div>
+    <%= form.hidden_field :instructor_id, value: current_user.id %>
+  </div>
+
+  <!-- Student Selection Table -->
+  <div class="field">
+  <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;" class="table table-hover" class="table-dark">
+    <thead>
+      <tr class="table-dark">
+        <th>Select</th>
+        <th>Email</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td>
+            <div>
+              <%= check_box_tag 'course[student_ids][]', student.id %>
+            </div>
+          </td>
+          <td><%= student.email %></td>
+          <td><%= "#{student.fname} #{student.lname}" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- Submit Button -->
+  <div class="actions">
+    <%= form.submit class: 'btn btn-secondary' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', courses_path %>

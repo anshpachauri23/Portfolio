@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 mb-4 bg-white">
+    <h1 class="display-4">Student Dashboard</h1>
+    <h3 class="mt-4">Available Homework</h3>
+    
+    <% if @homeworks.any? %>
+      <!-- List available homework -->
+      <div class="list-group mt-3">
+        <% @homeworks.each do |homework| %>
+          <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+            <div class="d-flex w-100 justify-content-between">
+              <!-- Homework title and due date -->
+              <h5 class="mb-1"><%= homework.title %></h5>
+              <small>Due: <%= homework.due_date.strftime("%b %d, %Y") %></small>
+            </div>
+            <p class="mb-1"><%= homework.description %></p>
+            <div class="mt-2">
+              <!-- Link to submit presentation -->
+              <%= link_to 'Submit Presentation', submit_homework_path(homework), class: 'btn btn-primary' %>
+              <% if @submissions[homework.id] %>
+              <!-- Badge for submitted homework -->
+                <span class="badge bg-success ml-2">Submitted</span>
+                <div class="mt-3">
+                  <!-- Display grade and feedback if available -->
+                  <p><strong>Grade:</strong> <%= @submissions[homework.id].grade.present? ? @submissions[homework.id].grade : 'Not graded yet' %></p>
+                  <p><strong>Feedback:</strong> <%= @submissions[homework.id].feedback.present? ? @submissions[homework.id].feedback : 'No feedback yet' %></p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+    <!-- Message if no homework is available -->
+      <p class="lead mt-3">No homework available at the moment.</p>
+    <% end %>
+  </div>
+</div>

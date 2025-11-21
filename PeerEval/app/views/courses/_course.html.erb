@@ -1,0 +1,13 @@
+<tr id="<%= dom_id course %>">
+  <td><%= course.semester %></td> <!-- Course semester -->
+  <td><%= course.name %></td> <!-- Course name -->
+  <td class="text-start">
+    <% if current_user.role == "instructor" %>
+    <!-- Instructor dashboard link -->
+      <%= link_to 'Go to Instructor Dashboard', instructor_dashboard_path(course_id: course.id), class: "btn btn-primary btn-sm" %>
+    <% else %>
+    <!-- Student dashboard link -->
+      <%= link_to 'Go to Student Dashboard', student_dashboard_path(course_id: course.id), class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,15 @@
+
+while(true) {
+  move()
+  if (random) {
+    turnleft()
+    infect()
+  }
+  else {
+    turnright()
+    look-for-something()
+  }
+  skip()
+}
+  
+  

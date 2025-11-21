@@ -1,0 +1,55 @@
+<h1>Homework Details</h1>
+<div class="card shadow-lg p-4 mb-4 bg-white">
+  <!-- Display homework details -->
+  <h3><%= @homework.title %></h3>
+  <p><strong>Description:</strong> <%= @homework.description %></p>
+  <p><strong>Due Date:</strong> <%= @homework.due_date.strftime("%B %d, %Y") %></p>
+</div>
+<hr>
+<h2>Submit Homework: <%= @homework.title %></h2>
+
+<div class="card shadow-lg p-4 mb-4 bg-white">
+  <div class="form-group">
+    <!-- Form to upload homework submission -->
+    <%= form_with model: @submission, url: create_submission_path(@homework), method: :post, local: true, multipart: true do |f| %>
+      <%= f.label :file, "Upload Your Presentation", class: "form-label" %>
+      <%= f.file_field :file, class: "form-control" %>
+      <%= f.submit "Submit", class: "btn btn-success mt-3" %>
+    <% end %>
+  </div>
+</div>
+
+<hr>
+
+<h2>Your Submitted Work</h2>
+
+<% if @latest_submission.present? %>
+  <p><strong>Submitted At:</strong> <%= @latest_submission.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+  <% if @latest_submission.file.attached? %>
+    <p><strong>Submitted File:</strong> <%= link_to @latest_submission.file.filename, url_for(@latest_submission.file), target: '_blank' %></p>
+  <% else %>
+    <p class="text-danger">No file attached for your submission.</p>
+  <% end %>
+
+  <h2>Comments on Your Submission</h2>
+  <% if @latest_submission.comments.any? %>
+    <ul class="list-group">
+      
+      <% @latest_submission.comments.each do |comment| %>
+        <li class="list-group-item">
+          <p class="mb-0"><strong>Comment:</strong> <%= comment.content %></p>
+          <small class="text-muted">Added on <%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %></small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted">No comments have been added to your submission yet.</p>
+  <% end %>
+<% else %>
+  <p class="text-muted">You haven't submitted any homework yet.</p>
+<% end %>
+
+<p class="mt-4">
+  <%= link_to 'Back to Submission', student_dashboard_path(course_id: @homework&.course_id), class: "btn btn-secondary" %>
+  <%= link_to 'View Other Submissions', view_submissions_student_dashboard_path(homework_id: @homework.id), class: "btn btn-primary mt-3" %>
+</p>
