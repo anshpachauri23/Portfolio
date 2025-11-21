@@ -7,10 +7,11 @@
 - **[AI Class Projects](AI%20class%20projects/)** - Search Algorithms, Machine Learning, NLP, Neural Networks
 
 ### 🌐 Full-Stack Web Applications
-- **[Personal Portfolio Website](personal-portfolio-website-main/)** - React 18, Next.js 14, TypeScript, Tailwind CSS
-- **[RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/)** - Next.js 14, TypeScript, Go, PostgreSQL, AWS S3
+- **[Personal Portfolio Website](personal-portfolio-website-main/)** 🔗 [Live Demo](https://personal-portfolio-tau-navy.vercel.app/) - React 18, Next.js 14, TypeScript, Tailwind CSS
+- **[RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/)** 🔗 [Live Demo](https://recipe-social-media-personal.vercel.app/auth/login) - Next.js 14, TypeScript, Go, PostgreSQL, AWS S3
+- **[JEAR E-commerce Platform](JEAR-ecommerce-CSE5234-main/)** 🔗 [Live Demo](https://jear-ecommerce-cse-5234.vercel.app/) - React.js, Node.js, AWS Lambda, DynamoDB
 - **[PeerEval - Presentation Platform](PeerEval/)** - Ruby on Rails, MySQL
-- **[E-commerce Platform](https://github.com/anshpachauri23/Portfolio)** - React.js, Node.js, AWS Lambda, DynamoDB
+- **[Market Pulse - Financial Sentiment Engine](Market-Pulse-Real-Time-Distributed-Financial-Sentiment-Engine-main/)** - Python, FastAPI, Apache Kafka, FAISS, React
 
 ### ☕ Java Applications (26 Projects)
 - **[Natural Number Calculator](Java%20Projects/Software%201/project_11/)** - ⭐ RPN Calculator with MVC Architecture
@@ -60,12 +61,16 @@
 ## 🚀 Deployment & Live Demos
 
 ### Available Live Projects
-- **Personal Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
-- **RecipeShare - Social Recipe Network**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
-- **E-commerce Platform**: [GitHub Repository](https://github.com/anshpachauri23/Portfolio)
+- **Personal Portfolio Website**: 🔗 [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+  - Modern, responsive portfolio showcasing all projects and experience
+- **RecipeShare - Social Recipe Network**: 🔗 [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
+  - Full-stack social media platform for sharing recipes with Instagram-like features
+- **JEAR E-commerce Platform**: 🔗 [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
+  - Complete e-commerce solution with AWS serverless backend and real-time inventory management
 
 ### Local Development Projects
 - **PeerEval**: Ruby on Rails application with setup instructions
+- **Market Pulse**: Financial sentiment engine with Docker setup
 - **AI/ML Projects**: Jupyter notebooks and Python scripts
 - **Java Applications**: Complete source code with documentation
 - **Assembly Projects**: C and Assembly language implementations

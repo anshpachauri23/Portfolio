@@ -10,9 +10,14 @@ I'm always interested in new opportunities, exciting projects, and meaningful co
 - **Location**: Columbus, Ohio (Open to remote opportunities)
 
 ### 🔗 Professional Profiles
-- **LinkedIn**: [linkedin.com/in/ansh-pachauri](http://www.linkedin.com/in/ansh-pachauri)
+- **LinkedIn**: [linkedin.com/in/ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [github.com/anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
 - **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+
+### 🌐 Live Project Demos
+- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
+- **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
 ### 🎓 Academic Information
 - **University**: The Ohio State University, College of Engineering
