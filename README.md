@@ -43,9 +43,10 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 ## 🎯 Featured Projects
 
-### 🌐 Recent Full-Stack Projects
+### 🌐 Full-Stack Web Applications
 
-#### [Personal Portfolio Website](personal-portfolio-website-main/) (React, Next.js, TypeScript, Tailwind CSS)
+#### [Personal Portfolio Website](personal-portfolio-website-main/) 
+**🔗 [Live Demo](https://personal-portfolio-tau-navy.vercel.app/) | React, Next.js, TypeScript, Tailwind CSS**
 - **Technology**: React 18, Next.js 14, TypeScript, Tailwind CSS, Vite, Lucide React, Radix UI
 - **Description**: Modern, responsive portfolio website showcasing professional experience, projects, and skills
 - **Features**:
@@ -56,7 +57,8 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
   - Optimized performance with Vite build system
 - **Impact**: Professional online presence with modern UI/UX design
 
-#### [RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/) (Next.js, TypeScript, Go, PostgreSQL, AWS S3)
+#### [RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/) 
+**🔗 [Live Demo](https://recipe-social-media-personal.vercel.app/auth/login) | Next.js, TypeScript, Go, PostgreSQL, AWS S3**
 - **Technology**: Next.js 14, TypeScript, Go, Gin Framework, PostgreSQL, AWS S3, JWT Authentication
 - **Description**: Full-stack social media platform for sharing and discovering recipes with Instagram-like features
 - **Features**:
@@ -69,15 +71,57 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
   - Responsive design with Tailwind CSS
 - **Impact**: Complete social media platform demonstrating full-stack development skills
 
-#### [E-commerce Platform](https://github.com/anshpachauri23/Portfolio) (React.js, Node.js, AWS Lambda, DynamoDB)
-- Developed and deployed backend infrastructure (Node.js, AWS Lambda/DynamoDB) powering all business logic
-- Built complete buying workflow (user checkout, details, confirmation) and contacts page
-- Improved core UI for optimal user experience
+#### [JEAR E-commerce Platform](JEAR-ecommerce-CSE5234-main/) 
+**🔗 [Live Demo](https://jear-ecommerce-cse-5234.vercel.app/) | React.js, Node.js, AWS Lambda, DynamoDB**
+- **Technology**: React.js, Node.js, AWS Lambda, API Gateway, DynamoDB, Bootstrap 5
+- **Description**: Modern full-stack e-commerce platform with complete shopping experience and real-time inventory management
+- **Features**:
+  - Product catalog with 5 premium sweatshirt designs
+  - Shopping cart with real-time updates and persistence
+  - Advanced checkout form with comprehensive validation
+  - Order confirmation with professional receipt display
+  - AWS Lambda functions for serverless processing
+  - Real-time inventory management with DynamoDB
+  - Sequential order numbering system
+  - Country-specific state/province validation
+- **Impact**: Complete e-commerce solution demonstrating AWS serverless architecture
 
-#### [Core Language Interpreter](https://github.com/anshpachauri23/Portfolio) (Java)
-- Designed and implemented comprehensive interpreter with lexical analysis, parsing, and recursive-descent execution
-- Incorporated robust memory management, reference-counting garbage collection, and extensive syntax/semantic checks
-- Achieved reliable execution and error handling for complex language constructs
+#### [Market Pulse - Real-Time Financial Sentiment Engine](Market-Pulse-Real-Time-Distributed-Financial-Sentiment-Engine-main/)
+**Python, FastAPI, Apache Kafka, FAISS, React**
+- **Technology**: Python, FastAPI, Apache Kafka, FAISS, Sentence Transformers, React, Docker
+- **Description**: High-frequency market analysis system that processes financial news streams in real-time using Retrieval-Augmented Generation (RAG)
+- **Features**:
+  - Distributed ingestion with Apache Kafka message broker
+  - Vector search (FAISS) for semantic similarity matching against economic axioms
+  - Directional sentiment analysis (BULLISH/BEARISH/NEUTRAL) with confidence scores
+  - Real-time visualization dashboard with WebSocket integration
+  - Microservices architecture with Docker containerization
+  - Sub-second latency for end-to-end processing
+- **Impact**: Production-grade distributed system demonstrating real-time data processing and AI/ML integration
+
+#### [PeerEval - Presentation Evaluation Platform](PeerEval/) 
+**Ruby on Rails, HTML5, CSS3, JavaScript, SQL**
+- **Technology**: Ruby on Rails, HTML5, CSS3, JavaScript, SQL, MySQL
+- **Description**: Full-stack web application for classroom presentation evaluation and feedback collection
+- **Features**:
+  - User authentication and role-based access control
+  - Course and homework management system
+  - Real-time feedback collection and analysis
+  - Instructor dashboard with grading tools
+  - Student dashboard for feedback review
+- **Impact**: Streamlined evaluation process for educational institutions, reduced submission errors by 35%
+
+#### [Core Language Interpreter](Java%20Projects/Principles%20of%20Programming/) 
+**Java, Compiler Design**
+- **Technology**: Java, Lexical Analysis, Parsing, Recursive-Descent Execution
+- **Description**: Comprehensive interpreter with complete compiler pipeline
+- **Features**:
+  - Lexical analysis and tokenization
+  - Recursive-descent parsing
+  - Robust memory management with reference-counting garbage collection
+  - Extensive syntax and semantic error checking
+  - Reliable execution of complex language constructs
+- **Impact**: Deep understanding of compiler design and language implementation
 
 ### 🤖 AI/ML Projects
 
@@ -115,7 +159,17 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
   - Student dashboard for feedback review
 - **Impact**: Streamlined evaluation process for educational institutions
 
-### ☕ Java Applications
+### ☕ Java Applications (26+ Projects)
+
+#### [Core Language Interpreter Series](Java%20Projects/Principles%20of%20Programming/)
+- **Technology**: Java, Lexical Analysis, Parsing, Memory Management
+- **Description**: Complete compiler pipeline from lexical analysis to execution
+- **Projects** (6 comprehensive projects):
+  - **Project 1-2**: Lexical analysis and basic parsing
+  - **Project 3**: Full interpreter with memory management and garbage collection
+  - **Project 4**: Function calls and parameter passing
+  - **Project 5**: Object-oriented features and type system
+  - **Project 6**: Advanced language features
 
 #### [Natural Number Calculator](Java%20Projects/Software%201/project_11/)
 - **Technology**: Java, MVC Architecture, GUI Development
@@ -129,6 +183,15 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 #### [Cryptographic Utilities](Java%20Projects/Software%201/project_8/)
 - **Technology**: Java, Cryptography, Security
 - **Description**: Cryptographic tools and utilities for secure data processing
+
+#### [Advanced Data Structures](Java%20Projects/Software%202/)
+- **Technology**: Java, Data Structures, Algorithms
+- **Projects**: Hash tables, Binary Search Trees, Linked Lists, Heap Sort, Graph algorithms
+- **Description**: Custom implementations of fundamental data structures and algorithms
+
+#### [Text Processing Tools](Java%20Projects/Software%202/project_9/)
+- **Technology**: Java, Text Processing, HTML Generation
+- **Description**: Tag cloud generator with word frequency analysis and HTML visualization
 
 ### 🔧 Systems Programming
 
@@ -171,9 +234,15 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 - **Email**: Anshpachauri2005@gmail.com
 - **Phone**: +1 6144939393
-- **LinkedIn**: [linkedin.com/in/ansh-pachauri](http://www.linkedin.com/in/ansh-pachauri)
+- **LinkedIn**: [linkedin.com/in/ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [github.com/anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
 - **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+
+## 🌐 Live Project Demos
+
+- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
+- **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
 ## 📁 Repository Structure
 
@@ -184,11 +253,19 @@ Portfolio/
 ├── SKILLS.md                    # Technical skills and achievements
 ├── PROJECTS_OVERVIEW.md         # Comprehensive project showcase
 ├── personal-portfolio-website-main/    # React/Next.js Portfolio Website
+│   └── 🔗 Live: https://personal-portfolio-tau-navy.vercel.app/
 ├── recipe-socialMedia-personal-main/  # Full-Stack Social Media Platform
+│   └── 🔗 Live: https://recipe-social-media-personal.vercel.app/auth/login
+├── JEAR-ecommerce-CSE5234-main/  # E-commerce Platform
+│   └── 🔗 Live: https://jear-ecommerce-cse-5234.vercel.app/
+├── Market-Pulse-Real-Time-Distributed-Financial-Sentiment-Engine-main/  # Financial Sentiment Engine
 ├── Ageing Sign Detection Project/    # AI/ML & Computer Vision
 ├── AI class projects/           # AI Coursework & Machine Learning
 ├── PeerEval/                    # Full-stack Web Application (Ruby on Rails)
 ├── Java Projects/               # Java Applications & Software Engineering
+│   ├── Principles of Programming/  # Compiler & Interpreter Projects
+│   ├── Software 1/              # Advanced Java Applications
+│   └── Software 2/              # Data Structures & Algorithms
 ├── C and Assembly language projects/     # Systems Programming
 ├── MATLAB projects/             # Signal Processing & Game Development
 └── ECE 2060 lab reports/       # Academic Documentation
@@ -214,4 +291,4 @@ This portfolio is for demonstration purposes. Individual projects may have their
 
 ---
 
-*Last Updated: December 2024*
+*Last Updated: January 2025*
