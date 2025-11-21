@@ -7,8 +7,8 @@ const experiences = [
     position: "Product Development and AI Integration Intern",
     location: "Tinton Falls, NJ",
     duration: "May 2025 - August 2025",
-    description: "Architected and deployed a full-stack AI chatbot solution on AWS to solve real-world user queries, collaborating on backend engineering with Python and AWS Lambda, and integrating Amazon Bedrock for advanced conversational intelligence and natural language understanding.",
-    technologies: ["Python", "AWS Lambda", "Amazon Bedrock", "AWS", "Cybersecurity", "API Integration"]
+    description: "Architected and deployed a full-stack AI chatbot solution on AWS using Python and Lambda to solve user queries, integrating AWS Bedrock for advanced NLU, reducing customer query resolution time by 40% and successfully handling 1,000+ queries per day with a 95% accuracy. Automated cybersecurity threat analysis by developing robust Python scripts integrated with VirusTotal/OTX APIs for threat intelligence, reducing manual analysis time by 15 hours per week, building tools for data processing, and improving threat detection accuracy by 30%.",
+    technologies: ["Python", "AWS Lambda", "AWS Bedrock", "AWS", "Cybersecurity", "API Integration", "VirusTotal", "OTX"]
   },
   {
     id: 2,

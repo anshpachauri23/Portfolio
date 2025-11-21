@@ -80,20 +80,12 @@ export const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium"> Phone</h4>
-                  <div className="space-y-1">
-                    <a
-                      href="tel:+16144939393"
-                      className="block text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      +1 (614) 493-9393
-                    </a>
-                    <a
-                      href="tel:+918076966625"
-                      className="block text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      +91 8076966625
-                    </a>
-                  </div>
+                  <a
+                    href="tel:+16144939393"
+                    className="block text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    +1 (614) 493-9393
+                  </a>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
