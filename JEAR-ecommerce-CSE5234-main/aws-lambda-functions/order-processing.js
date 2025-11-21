@@ -1,5 +1,10 @@
+const { EventBridgeClient, PutEventsCommand } = require("@aws-sdk/client-eventbridge");
+const eventClient = new EventBridgeClient({ region: 'us-east-2' });
+
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient, PutCommand, UpdateCommand, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const crypto = require('crypto');
+const uuidv4 = () => crypto.randomUUID();
 
 const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-2' });
 const docClient = DynamoDBDocumentClient.from(client);
@@ -122,7 +127,11 @@ exports.handler = async (event) => {
   }
 
   try {
-    const orderData = JSON.parse(event.body);
+    // Allow both API Gateway and EventBridge formats
+const orderData = event.body 
+? JSON.parse(event.body)     // From API Gateway
+: event.detail;              // From EventBridge
+
     
     // Validate the order data
     const validation = validateOrder(orderData);
@@ -148,8 +157,8 @@ exports.handler = async (event) => {
         const { productId, size, quantity } = item;
         
         // Get current inventory
-         const getParams = {
-           TableName: 'inventory',
+        const getParams = {
+          TableName: 'inventory',
           Key: {
             productId: productId,
             size: size
@@ -165,8 +174,8 @@ exports.handler = async (event) => {
 
         const availableQuantity = currentItem.Item.quantity;
         
-         if (availableQuantity < quantity) {
-           inventoryErrors.push(`Insufficient stock for ${productId} size ${size}. Available: ${availableQuantity}, Requested: ${quantity}`);
+        if (availableQuantity < quantity) {
+          inventoryErrors.push(`Insufficient stock for ${productData.name || productId} size ${size}. Available: ${availableQuantity}, Requested: ${quantity}`);
         } else {
           inventoryChecks.push({
             productId,
@@ -200,13 +209,98 @@ exports.handler = async (event) => {
     const orderId = Date.now().toString();
     const orderNumber = `AA${(Math.floor(Math.random() * 90000000) + 10000000).toString()}`;
 
-     // Save the order
-     const orderParams = {
-       TableName: 'orders',
+    // ==========================================
+    // SYNCHRONOUS PAYMENT PROCESSING (Lab 9)
+    // ==========================================
+    console.log('💳 Processing payment synchronously...');
+    
+    const { cardNumber, expiryDate, cvv, cardholderName } = orderData.customerInfo;
+    
+    // Validate payment information
+    const cardValidation = validateCreditCard(cardNumber);
+    if (!cardValidation.valid) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          error: 'Payment validation failed',
+          details: cardValidation.error,
+          status: 'error'
+        })
+      };
+    }
+
+    const expiryValidation = validateExpiryDate(expiryDate);
+    if (!expiryValidation.valid) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          error: 'Payment validation failed',
+          details: expiryValidation.error,
+          status: 'error'
+        })
+      };
+    }
+
+    // Generate payment token (PCI compliant - no full card storage)
+    const paymentToken = uuidv4();
+    const last4Digits = cardNumber.replace(/\s/g, '').slice(-4);
+    const maskedCard = `****-****-****-${last4Digits}`;
+
+    // Store payment information in separate PaymentTable (without full card details)
+    try {
+      const paymentParams = {
+        TableName: 'PaymentTable',
+        Item: {
+          paymentToken: paymentToken,
+          orderId: orderId,
+          orderNumber: orderNumber,
+          cardholderName: cardholderName,
+          last4Digits: last4Digits,
+          maskedCard: maskedCard,
+          expiryDate: expiryDate,  // In production, you might not store this either
+          amount: orderData.total,
+          status: 'approved',
+          processedAt: new Date().toISOString()
+          // NOTE: Full cardNumber and CVV are NEVER stored
+        }
+      };
+
+      await docClient.send(new PutCommand(paymentParams));
+      console.log('✅ Payment processed successfully. Token:', paymentToken);
+    } catch (paymentError) {
+      console.error('❌ Payment processing failed:', paymentError);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          error: 'Payment processing failed',
+          details: paymentError.message,
+          status: 'error'
+        })
+      };
+    }
+
+    // Remove sensitive payment information before storing order (PCI compliance)
+    const sanitizedCustomerInfo = { ...orderData.customerInfo };
+    delete sanitizedCustomerInfo.cardNumber;
+    delete sanitizedCustomerInfo.expiryDate;
+    delete sanitizedCustomerInfo.cvv;
+    delete sanitizedCustomerInfo.cardholderName;
+
+    // Save the order with payment token (NOT card details)
+    const orderParams = {
+      TableName: 'orders',
       Item: {
         orderID: orderId,
         orderNumber: orderNumber,
-        ...orderData,
+        items: orderData.items,
+        customerInfo: sanitizedCustomerInfo,
+        total: orderData.total,
+        orderDate: orderData.orderDate,
+        paymentToken: paymentToken,  // Store only the token reference
+        paymentStatus: 'approved',
         createdAt: new Date().toISOString(),
         status: 'confirmed'
       }
@@ -214,6 +308,40 @@ exports.handler = async (event) => {
 
     await docClient.send(new PutCommand(orderParams));
     console.log('✅ Order saved successfully with ID:', orderId, 'and Order Number:', orderNumber);
+// --- ASYNC SHIPPING EVENT ---
+try {
+  const lineItemCount = orderData.items.length;
+
+  const shippingPayload = {
+      businessId: "STORE-REGISTRATION-1234", // your company ID per lab
+      shipmentAddress: {
+          address: orderData.customerInfo.address,
+          city: orderData.customerInfo.city,
+          state: orderData.customerInfo.state,
+          zipCode: orderData.customerInfo.zipCode,
+          country: orderData.customerInfo.country
+      },
+      numPackets: lineItemCount,         // 1 packet per line item
+      weightPerPacket: 1.0               // fixed per lab
+  };
+
+  const eventParams = {
+      Entries: [
+          {
+              Source: "order.service",
+              DetailType: "OrderShippingRequested",
+              Detail: JSON.stringify(shippingPayload),
+              EventBusName: "default"
+          }
+      ]
+  };
+
+  const result = await eventClient.send(new PutEventsCommand(eventParams));
+  console.log("📦 Shipping event sent to EventBridge:", JSON.stringify(result));
+
+} catch (shippingErr) {
+  console.error("❌ Failed to send shipping event:", shippingErr);
+}
 
     // Update inventory after successful order
     const inventoryUpdates = [];
@@ -222,8 +350,8 @@ exports.handler = async (event) => {
       try {
         const { productId, size, quantity } = item;
         
-         const updateParams = {
-           TableName: 'inventory',
+        const updateParams = {
+          TableName: 'inventory',
           Key: {
             productId: productId,
             size: size
@@ -267,6 +395,8 @@ exports.handler = async (event) => {
         message: 'Order saved successfully!',
         orderID: orderId,
         orderNumber: orderNumber,
+        paymentToken: paymentToken,
+        paymentStatus: 'approved',
         status: 'success',
         inventoryUpdates: inventoryUpdates,
         timestamp: new Date().toISOString()
