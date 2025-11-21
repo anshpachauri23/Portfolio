@@ -4,6 +4,14 @@
 
 I'm a passionate Computer Science and Engineering student at **The Ohio State University** with expertise in **AI/ML**, **Full-Stack Web Development**, **Software Engineering**, and **Cloud Computing**. I have hands-on experience with modern technologies and have built projects spanning from machine learning applications to full-stack web applications, with professional experience at **NMT Security** and **Deloitte**.
 
+### 📊 Quick Stats
+- 🎓 **3.6/4.0 GPA** | Expected Graduation: May 2026
+- 💼 **3 Internships** | NMT Security, Deloitte, Verzeo Edutech
+- 🚀 **15+ Projects** | Full-stack applications, AI/ML systems, distributed systems
+- 🏆 **2 AWS Certifications** | AI Practitioner & Cloud Practitioner
+- 📝 **Research Publication** | 22 citations on Fake News Detection
+- 👥 **Leadership** | Founder & President of Quantum Computing Club, Resident Advisor
+
 ## 🛠️ Technical Skills
 
 ### Programming Languages
@@ -143,19 +151,6 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 - **Impact**: Demonstrated expertise in search algorithms, machine learning, NLP, and neural networks
 
 
-### 🌐 Web Development
-
-#### [PeerEval - Presentation Evaluation Platform](PeerEval/)
-- **Technology**: Ruby on Rails, HTML5, CSS3, JavaScript, SQL
-- **Description**: Full-stack web application for classroom presentation evaluation and feedback collection
-- **Features**:
-  - User authentication and role-based access control
-  - Course and homework management system
-  - Real-time feedback collection and analysis
-  - Instructor dashboard with grading tools
-  - Student dashboard for feedback review
-- **Impact**: Streamlined evaluation process for educational institutions
-
 ### ☕ Java Applications (26+ Projects)
 
 #### [Core Language Interpreter Series](Java%20Projects/Principles%20of%20Programming/)
@@ -229,16 +224,13 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 **August 2024 – Present**
 - Led community-building initiatives as a Resident Assistant, boosting resident participation by 40% through creating and organizing 15+ events and workshops tailored to diverse interests; maintained a 95% satisfaction rate and resolved 10+ policy conflicts by fostering an inclusive, supportive living environment and providing proactive, empathetic outreach and conflict resolution for residents
 
-## 📈 Key Achievements
+## 🌐 Live Project Demos
 
-- ✅ **Professional Experience**: AI Integration Intern at NMT Security, Technology Consulting at Deloitte
-- ✅ **Research Publication**: "Fake News Detection using Machine Learning and Natural Language Processing" (22 citations)
-- ✅ **Leadership**: Founder and President of The Quantum Computing Club at Ohio State
-- ✅ **Certifications**: AWS Certified AI Practitioner, AWS Certified Cloud Practitioner
-- ✅ **Academic Excellence**: 3.6/4.0 GPA with specialization in Software Engineering
-- ✅ **Project Impact**: 15+ software projects, 90%+ accuracy in AI models, 35% reduction in submission errors
-- ✅ **Full-Stack Development**: React, Next.js, Node.js, Go, Ruby on Rails applications
-- ✅ **Cloud Expertise**: AWS Lambda, Bedrock, S3, RDS, DynamoDB, API Gateway
+**Try out my deployed projects:**
+
+- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
+- **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
 ## 🔗 Contact & Links
 
@@ -247,12 +239,6 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 - **LinkedIn**: [ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
 - **Website**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
-
-## 🌐 Live Project Demos
-
-- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
-- **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
-- **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
 ## 📁 Repository Structure
 
@@ -281,19 +267,11 @@ Portfolio/
 └── ECE 2060 lab reports/       # Academic Documentation
 ```
 
-## 🌐 Portfolio Website
+## 📚 Additional Resources
 
-**Visit my professional portfolio website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
-
-This repository contains the source code and documentation for all my projects, while my portfolio website provides an interactive showcase of my work and achievements.
-
-## 🚀 Getting Started
-
-Each project directory contains:
-- **README.md** - Project documentation and setup instructions
-- **Source Code** - Complete implementation
-- **Documentation** - Technical specifications and user guides
-- **Screenshots/Demos** - Visual project demonstrations
+- **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/) - Interactive showcase of my work
+- **Project Documentation**: Each project directory contains detailed README files with setup instructions, technical specifications, and usage guides
+- **Source Code**: All projects include complete source code and are available for review
 
 ## 📄 License
 
