@@ -6,7 +6,7 @@ I'm always interested in new opportunities, exciting projects, and meaningful co
 
 ### 📧 Primary Contact
 - **Email**: [Anshpachauri2005@gmail.com](mailto:Anshpachauri2005@gmail.com)
-- **Phone**: +1 6144939393
+- **Phone**: +1 6144939393 / +91 8076966625
 - **Location**: Columbus, Ohio (Open to remote opportunities)
 
 ### 🔗 Professional Profiles
@@ -23,7 +23,7 @@ I'm always interested in new opportunities, exciting projects, and meaningful co
 - **University**: The Ohio State University, College of Engineering
 - **Degree**: Bachelor of Science in Computer Science and Engineering
 - **Expected Graduation**: May 2026
-- **GPA**: 3.6/4.0
+- **GPA**: 3.63/4.0
 - **Specialization**: Software Engineering
 
 ### 💼 Professional Status

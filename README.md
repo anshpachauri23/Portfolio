@@ -210,7 +210,7 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 **Bachelor's of Science in Computer Science and Engineering**  
 **Expected Graduation Date: May 2026**
 
-- **GPA**: 3.6/4.0
+- **GPA**: 3.63/4.0
 - **Specializing in Software Engineering**
 - **Relevant Coursework**: Software Engineering, Data Structures & Algorithms, Object-Oriented Programming, Machine Learning, Distributed Enterprise Computing, Database Systems, Web Development, Operating Systems, Artificial Intelligence, Quantum Computing, Networking
 
@@ -235,7 +235,7 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 ## 🔗 Contact & Links
 
 - **Email**: [Anshpachauri2005@gmail.com](mailto:Anshpachauri2005@gmail.com)
-- **Phone**: +1 6144939393
+- **Phone**: +1 6144939393 / +91 8076966625
 - **LinkedIn**: [ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
 - **Website**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
