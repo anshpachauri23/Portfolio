@@ -1,0 +1,54 @@
+name: Daily Meal Planner Data Update
+
+on:
+  schedule:
+    # Runs at 09:00 UTC every day (5:00 AM EDT / 4:00 AM EST)
+    # Ohio is UTC-4 during daylight saving (Mar–Nov) so 09:00 UTC = 5:00 AM local
+    - cron: '0 9 * * *'
+  # Allow manual triggering from the GitHub Actions tab just in case
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run data extraction script
+        run: python extract_data.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Stage the generated data files on main
+          git add data/osu_meals.json data/meal_plans.json
+          git diff --staged --quiet || (git commit -m "Auto-update meal data" && git push origin main)
+
+          # Now, switch to the test branch. If it exists remotely, fetch it and checkout.
+          # We check it out without merging anything from main!
+          if git ls-remote --exit-code --heads origin test; then
+            git fetch origin test
+            git checkout test
+
+            # Re-generate the fresh JSON files solely on the 'test' branch context
+            python extract_data.py
+            git add data/osu_meals.json data/meal_plans.json
+
+            # Commit and push to the test branch independently
+            git diff --staged --quiet || (git commit -m "Auto-update meal data" && git push origin test)
+          else
+            echo "Branch 'test' not found on origin. Skipping test branch update."
+          fi

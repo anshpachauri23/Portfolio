@@ -1,0 +1,95 @@
+<div class="page-header">
+  <h1>Assets</h1>
+  @if (canManage()) {
+    <a mat-raised-button color="primary" routerLink="/dashboard/assets/new">
+      <mat-icon>add</mat-icon> New Asset
+    </a>
+  }
+</div>
+
+<!-- Filters -->
+<div class="filter-bar" [formGroup]="filterForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="">All</mat-option>
+      @for (s of assetStatuses; track s) {
+        <mat-option [value]="s">{{ s | titlecase }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Asset Type</mat-label>
+    <input matInput formControlName="assetType" placeholder="e.g. LAPTOP" />
+  </mat-form-field>
+</div>
+
+@if (loading) {
+  <mat-spinner diameter="40" class="spinner" />
+}
+
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="assets" matSort>
+    <ng-container matColumnDef="assetTag">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Asset Tag</th>
+      <td mat-cell *matCellDef="let a">
+        <a [routerLink]="['/dashboard/assets', a.id]">{{ a.assetTag }}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="assetType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let a">{{ a.assetType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let a">
+        <app-status-badge [status]="a.status" />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="vendor">
+      <th mat-header-cell *matHeaderCellDef>Vendor</th>
+      <td mat-cell *matCellDef="let a">{{ a.vendor ?? '—' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef>Model</th>
+      <td mat-cell *matCellDef="let a">{{ a.model ?? '—' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="assignedUserName">
+      <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+      <td mat-cell *matCellDef="let a">{{ a.assignedUserName ?? '—' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let a">
+        <a mat-icon-button [routerLink]="['/dashboard/assets', a.id]" title="View">
+          <mat-icon>visibility</mat-icon>
+        </a>
+        @if (canManage()) {
+          <a mat-icon-button [routerLink]="['/dashboard/assets', a.id, 'edit']" title="Edit">
+            <mat-icon>edit</mat-icon>
+          </a>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [length]="totalElements" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]" />
+</div>
+
+<style>
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .filter-bar { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .table-container { overflow-x: auto; }
+  .spinner { margin: 32px auto; display: block; }
+  a { text-decoration: none; color: #3f51b5; }
+</style>

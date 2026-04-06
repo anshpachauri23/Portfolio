@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    # Use the Google Cloud SQL socket factory for the connection
+    url: jdbc:postgresql:///${DB_NAME:portal_db}?socketFactory=com.google.cloud.sql.postgres.SocketFactory&cloudSqlInstance=${DB_HOST}

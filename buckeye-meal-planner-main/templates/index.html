@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuckeyeMealPlanner</title>
+  <meta name="description"
+    content="Personalized weekly meal plans for Ohio State University students. Powered by Google Gemini 2.5 Flash.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <!-- Top Bar -->
+  <div class="osu-topbar">
+    <div class="container">
+      <a href="/" class="osu-logo">BuckeyeMealPlanner</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span id="themeIcon">&#9790;</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <p>Get a personalized weekly meal plan based on your dining preferences and nutritional goals.</p>
+      <span class="data-badge">{{ total_items }} menu items &middot; {{ places|length }} dining locations</span>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <main class="container py-4">
+    <form action="/generate" method="POST" id="planForm">
+      <div class="row g-4 align-items-stretch">
+
+        <!-- Left: Preferences -->
+        <div class="col-lg-6 d-flex flex-column">
+          <div class="section-card" style="flex:1;">
+            <div class="card-header">Meal Preferences</div>
+            <div class="card-body">
+
+              <div class="mb-3">
+                <label for="meal_plan" class="form-label">Meal Plan</label>
+                <select class="form-select" id="meal_plan" name="meal_plan">
+                  {% for plan_name in meal_plans %}
+                  <option value="{{ plan_name }}" {% if plan_name=='Scarlet 14' %}selected{% endif %}>
+                    {{ plan_name }}
+                  </option>
+                  {% endfor %}
+                </select>
+                <div class="form-text" id="planDetails"></div>
+              </div>
+
+              <div class="mb-3">
+                <label for="diet" class="form-label">Dietary Preference</label>
+                <select class="form-select" id="diet" name="diet">
+                  <option value="non-vegetarian" selected>Non-Vegetarian</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="gluten-free">Gluten-Free</option>
+                  <option value="halal">Halal</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="allergens" class="form-label">Allergies to Avoid</label>
+                <div class="allergen-grid">
+                  <!-- Coconut -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-coconut" name="allergens"
+                      value="coconut">
+                    <label class="allergen-btn" for="allergen-coconut">Coconut</label>
+                  </div>
+                  <!-- Shellfish -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-shellfish" name="allergens"
+                      value="shellfish">
+                    <label class="allergen-btn" for="allergen-shellfish">Shellfish</label>
+                  </div>
+                  <!-- Dairy -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-dairy" name="allergens" value="dairy">
+                    <label class="allergen-btn" for="allergen-dairy">Dairy</label>
+                  </div>
+                  <!-- Eggs -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-eggs" name="allergens" value="eggs">
+                    <label class="allergen-btn" for="allergen-eggs">Eggs</label>
+                  </div>
+                  <!-- Fish -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-fish" name="allergens" value="fish">
+                    <label class="allergen-btn" for="allergen-fish">Fish</label>
+                  </div>
+                  <!-- Peanuts -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-peanuts" name="allergens"
+                      value="peanuts">
+                    <label class="allergen-btn" for="allergen-peanuts">Peanuts</label>
+                  </div>
+                  <!-- Sesame -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-sesame" name="allergens"
+                      value="sesame">
+                    <label class="allergen-btn" for="allergen-sesame">Sesame</label>
+                  </div>
+                  <!-- Soy -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-soy" name="allergens" value="soy">
+                    <label class="allergen-btn" for="allergen-soy">Soy</label>
+                  </div>
+                  <!-- Tree Nuts -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-tree-nuts" name="allergens"
+                      value="tree-nuts">
+                    <label class="allergen-btn" for="allergen-tree-nuts">Tree Nuts</label>
+                  </div>
+                  <!-- Wheat -->
+                  <div>
+                    <input type="checkbox" class="allergen-checkbox" id="allergen-wheat" name="allergens" value="wheat">
+                    <label class="allergen-btn" for="allergen-wheat">Wheat</label>
+                  </div>
+                </div>
+                <div class="form-text">Tap to select allergens you want to avoid.</div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-6">
+                  <label for="weekday_meals" class="form-label">Weekday Meals / Day</label>
+                  <select class="form-select" id="weekday_meals" name="weekday_meals">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected>3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="weekend_meals" class="form-label">Weekend Meals / Day</label>
+                  <select class="form-select" id="weekend_meals" name="weekend_meals">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Campus Areas -->
+              <div>
+                <label class="form-label">Campus Areas</label>
+                <div class="campus-areas">
+                  {% for area, locs in campus_areas.items() %}
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="campus_areas" value="{{ area }}"
+                      id="area_{{ area }}" checked>
+                    <label class="form-check-label" for="area_{{ area }}">{{ area }}</label>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="form-text">Select which parts of campus to include</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Constraints -->
+        <div class="col-lg-6">
+          <div class="section-card">
+            <div class="card-header">Nutritional Goals <span class="fw-normal text-muted">(optional)</span></div>
+            <div class="card-body">
+
+              <div class="mb-4">
+                <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" id="use_protein" name="use_protein">
+                  <label class="form-check-label" for="use_protein">Minimum Protein</label>
+                </div>
+                <div class="slider-row disabled" id="proteinRow">
+                  <input type="range" class="form-range" id="min_protein" name="min_protein" min="0" max="250"
+                    value="50" step="10">
+                  <span class="slider-value" id="proteinVal">50g</span>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" id="use_carbs" name="use_carbs">
+                  <label class="form-check-label" for="use_carbs">Maximum Carbs</label>
+                </div>
+                <div class="slider-row disabled" id="carbsRow">
+                  <input type="range" class="form-range" id="max_carbs" name="max_carbs" min="100" max="500" value="300"
+                    step="10">
+                  <span class="slider-value" id="carbsVal">300g</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" id="use_calories" name="use_calories">
+                  <label class="form-check-label" for="use_calories">Maximum Calories</label>
+                </div>
+                <div class="slider-row disabled" id="caloriesRow">
+                  <input type="range" class="form-range" id="max_calories" name="max_calories" min="1200" max="4000"
+                    value="2500" step="100">
+                  <span class="slider-value" id="caloriesVal">2500</span>
+                </div>
+              </div>
+
+              <p class="form-text mb-2">When no goals are set, defaults from the USDA Dietary Guidelines for Americans
+                (2020–2025) are used: {{ usda_defaults.calories }} cal, {{ usda_defaults.min_protein }}g protein, {{
+                usda_defaults.max_carbs }}g carbs per day.</p>
+              <p class="form-text mb-0"><span class="text-danger">&#9888;</span> <strong>Health disclaimer:</strong> Nutritional targets you set are your own choice. Extreme calorie restriction or very high protein/carb targets can be harmful. Please consult a healthcare professional or registered dietitian before making significant dietary changes.</p>
+
+            </div>
+          </div>
+          <!-- Meal Times -->
+          <div class="section-card mt-3">
+            <div class="card-header">Meal Times <span class="fw-normal text-muted">(optional)</span></div>
+            <div class="card-body">
+              <p class="form-text mb-3">Set your preferred eating times. Slots update automatically based on your meals-per-day selections above.</p>
+              <div id="mealTimesContainer"></div>
+              <p class="form-text mt-3 mb-0"><span class="text-warning-emphasis">&#9888;</span> Only times when at least one campus restaurant is open are listed. Actual availability may vary — check the OSU Dining website for real-time hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-osu btn-lg" id="submitBtn">
+          <span class="btn-text">Generate Meal Plan</span>
+          <span class="btn-loading d-none">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Generating...
+          </span>
+        </button>
+        <p class="text-muted mt-2 small">Powered by Google Gemini</p>
+      </div>
+    </form>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="d-none">
+      <div class="loading-content">
+        <div class="spinner-border spinner-lg text-light mb-3" role="status"></div>
+        <p class="loading-phrase" id="loadingPhrase">Warming up the grill...</p>
+        <p class="loading-sub text-muted small">This usually takes 1-2 minutes</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="osu-footer">
+    <div class="container">
+      <p class="mb-0">&copy; 2026 BuckeyeMealPlanner &middot; Powered by Google Gemini</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  <script>
+    // Slider toggles
+    document.querySelectorAll('.form-check-input[id^="use_"]').forEach(cb => {
+      const rowId = cb.id.replace('use_', '') + 'Row';
+      const row = document.getElementById(rowId);
+      if (!row) return;
+      cb.addEventListener('change', () => row.classList.toggle('disabled', !cb.checked));
+    });
+
+    // Slider labels
+    const sliderMap = {
+      'min_protein': { el: 'proteinVal', suffix: 'g' },
+      'max_carbs': { el: 'carbsVal', suffix: 'g' },
+      'max_calories': { el: 'caloriesVal', suffix: '' },
+    };
+    Object.entries(sliderMap).forEach(([id, cfg]) => {
+      const slider = document.getElementById(id);
+      const label = document.getElementById(cfg.el);
+      slider.addEventListener('input', () => label.textContent = slider.value + cfg.suffix);
+    });
+
+    // Plan details
+    const planData = {{ meal_plans | tojson }};
+    const planSelect = document.getElementById('meal_plan');
+    const planDetails = document.getElementById('planDetails');
+    function updatePlanDetails() {
+      const info = planData[planSelect.value];
+      if (info) planDetails.textContent = Object.entries(info).map(([k, v]) => k + ': ' + v).join(' · ');
+    }
+    planSelect.addEventListener('change', updatePlanDetails);
+    updatePlanDetails();
+
+    // Meal time selects — restricted to restaurant operating hours
+    // All slots default to empty (optional — user picks a time only if needed)
+    const DEFAULT_TIMES = {};
+
+    // Fallback bounds used before the API responds
+    let restaurantHours = {
+      weekday: { min: '07:00', max: '23:00' },
+      weekend: { min: '07:00', max: '22:00' },
+    };
+
+    function hhmm24To12(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
+      const period = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      return h12 + ':' + String(m).padStart(2, '0') + ' ' + period;
+    }
+
+    function buildTimeOptions(minHHMM, maxHHMM, selectedHHMM) {
+      const [minH, minM] = minHHMM.split(':').map(Number);
+      const [maxH, maxM] = maxHHMM.split(':').map(Number);
+      const minTotal = minH * 60 + minM;
+      const maxTotal = maxH * 60 + maxM;
+      // Snap minTotal down to nearest 30, maxTotal up to nearest 30
+      const start = Math.floor(minTotal / 30) * 30;
+      const end = Math.ceil(maxTotal / 30) * 30;
+
+      let html = '<option value="">No preference</option>';
+      for (let t = start; t <= end; t += 30) {
+        const hh = String(Math.floor(t / 60)).padStart(2, '0');
+        const mm = String(t % 60).padStart(2, '0');
+        const val = hh + ':' + mm;
+        const label = hhmm24To12(val);
+        const sel = (val === selectedHHMM) ? ' selected' : '';
+        html += '<option value="' + val + '"' + sel + '>' + label + '</option>';
+      }
+      return html;
+    }
+
+    function renderMealTimes() {
+      const weekdayCount = parseInt(document.getElementById('weekday_meals').value) || 3;
+      const weekendCount = parseInt(document.getElementById('weekend_meals').value) || 2;
+      const container = document.getElementById('mealTimesContainer');
+
+      // Preserve currently selected values before re-render
+      const existing = {};
+      container.querySelectorAll('select[name]').forEach(function(sel) {
+        existing[sel.name] = sel.value;
+      });
+
+      const wdDefaults = [];
+      const weDefaults = [];
+
+      function buildGroup(prefix, count, defaults, bounds) {
+        let html = '<div class="row g-2">';
+        for (let i = 1; i <= count; i++) {
+          const name = prefix + '_meal_' + i + '_time';
+          const selectedVal = (existing[name] !== undefined && existing[name] !== '')
+            ? existing[name]
+            : (defaults[i - 1] || '');
+          html += '<div class="col-6">'
+            + '<label class="form-label small mb-1">Meal ' + i + '</label>'
+            + '<select class="form-select form-select-sm" name="' + name + '">'
+            + buildTimeOptions(bounds.min, bounds.max, selectedVal)
+            + '</select>'
+            + '</div>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      container.innerHTML = '<div class="row g-3">'
+        + '<div class="col-12 col-sm-6">'
+        + '<div class="meal-times-heading">Weekdays</div>'
+        + buildGroup('weekday', weekdayCount, wdDefaults, restaurantHours.weekday)
+        + '</div>'
+        + '<div class="col-12 col-sm-6">'
+        + '<div class="meal-times-heading">Weekends</div>'
+        + buildGroup('weekend', weekendCount, weDefaults, restaurantHours.weekend)
+        + '</div>'
+        + '</div>';
+    }
+
+    function getHoursParams() {
+      const areas = Array.from(document.querySelectorAll('input[name="campus_areas"]:checked'))
+        .map(cb => cb.value).join(',');
+      const diet = document.getElementById('diet').value;
+      const allergens = Array.from(document.querySelectorAll('input[name="allergens"]:checked'))
+        .map(cb => cb.value).join(',');
+      const p = new URLSearchParams();
+      if (areas) p.set('campus_areas', areas);
+      if (diet) p.set('diet', diet);
+      if (allergens) p.set('allergens', allergens);
+      return p.toString();
+    }
+
+    let _hoursFetchTimer = null;
+    function fetchHoursAndRender() {
+      // Debounce so rapid allergen toggling doesn't fire many requests
+      clearTimeout(_hoursFetchTimer);
+      _hoursFetchTimer = setTimeout(() => {
+        const qs = getHoursParams();
+        fetch('/api/restaurant-hours' + (qs ? '?' + qs : ''))
+          .then(r => r.json())
+          .then(data => { restaurantHours = data; renderMealTimes(); })
+          .catch(() => renderMealTimes());
+      }, 200);
+    }
+
+    // Initial load
+    fetchHoursAndRender();
+
+    document.getElementById('weekday_meals').addEventListener('change', renderMealTimes);
+    document.getElementById('weekend_meals').addEventListener('change', renderMealTimes);
+
+    // Re-fetch hours when anything that affects available food changes
+    document.getElementById('diet').addEventListener('change', fetchHoursAndRender);
+    document.querySelectorAll('input[name="campus_areas"]').forEach(cb => {
+      cb.addEventListener('change', fetchHoursAndRender);
+    });
+    document.querySelectorAll('input[name="allergens"]').forEach(cb => {
+      cb.addEventListener('change', fetchHoursAndRender);
+    });
+
+    // Submit loading with rotating phrases
+    const loadingPhrases = [
+      "Warming up the grill...",
+      "Tossing the salad...",
+      "Balancing your macros...",
+      "Scouting Traditions menus...",
+      "Preheating the oven...",
+      "Chopping fresh veggies...",
+      "Seasoning to perfection...",
+      "Plating your week...",
+      "Stirring the soup pot...",
+      "Checking what's open on campus...",
+      "Rolling the perfect burrito...",
+      "Simmering the stir-fry...",
+      "Flipping pancakes...",
+      "Brewing something good...",
+      "Counting every gram of protein...",
+      "Slicing the avocado...",
+      "Taste-testing for quality...",
+      "Crunching the nutrition numbers...",
+      "Drizzling the finishing sauce...",
+      "Almost ready to serve...",
+    ];
+
+    let phraseInterval = null;
+
+    document.getElementById('planForm').addEventListener('submit', function (e) {
+      const form = this;
+      if (form.dataset.submitted) {
+        e.preventDefault();
+        return;
+      }
+      form.dataset.submitted = 'true';
+
+      const btn = document.getElementById('submitBtn');
+      btn.querySelector('.btn-text').classList.add('d-none');
+      btn.querySelector('.btn-loading').classList.remove('d-none');
+
+      // Delay disabling by a tick so Chrome mobile doesn't cancel the form submission
+      setTimeout(function() {
+        btn.disabled = true;
+      }, 10);
+
+      const overlay = document.getElementById('loadingOverlay');
+      const phraseEl = document.getElementById('loadingPhrase');
+      overlay.classList.remove('d-none');
+
+      let idx = 0;
+      phraseEl.textContent = loadingPhrases[idx];
+      phraseInterval = setInterval(function () {
+        idx = (idx + 1) % loadingPhrases.length;
+        phraseEl.style.opacity = 0;
+        setTimeout(function () {
+          phraseEl.textContent = loadingPhrases[idx];
+          phraseEl.style.opacity = 1;
+        }, 300);
+      }, 2500);
+    });
+
+    // Handle back/forward cache (bfcache) navigation
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        const form = document.getElementById('planForm');
+        if (form) form.dataset.submitted = '';
+        const btn = document.getElementById('submitBtn');
+        if (btn) {
+          btn.disabled = false;
+          btn.querySelector('.btn-text').classList.remove('d-none');
+          btn.querySelector('.btn-loading').classList.add('d-none');
+        }
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) overlay.classList.add('d-none');
+        if (phraseInterval) clearInterval(phraseInterval);
+      }
+    });
+  </script>
+</body>
+
+</html>

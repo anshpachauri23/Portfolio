@@ -1,0 +1,93 @@
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>New Service Request</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (selectedTypeApprovalRequired) {
+      <div class="approval-banner">
+        <mat-icon>info</mat-icon>
+        This request type requires manager approval before work begins.
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="request-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Request Type *</mat-label>
+        <mat-select formControlName="requestTypeId">
+          @for (type of requestTypes; track type.id) {
+            <mat-option [value]="type.id">
+              {{ type.name }}
+              @if (type.approvalRequired) { <span class="approval-tag"> (Approval required)</span> }
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.controls.requestTypeId.hasError('required')) {
+          <mat-error>Request type is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title *</mat-label>
+        <input matInput formControlName="title" placeholder="Brief summary of your request" />
+        @if (form.controls.title.hasError('required')) {
+          <mat-error>Title is required</mat-error>
+        }
+        @if (form.controls.title.hasError('maxlength')) {
+          <mat-error>Title must not exceed 255 characters</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description *</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          rows="5"
+          placeholder="Describe your request in detail (at least 10 characters)"
+        ></textarea>
+        @if (form.controls.description.hasError('required')) {
+          <mat-error>Description is required</mat-error>
+        }
+        @if (form.controls.description.hasError('minlength')) {
+          <mat-error>Description must be at least 10 characters</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Priority *</mat-label>
+        <mat-select formControlName="priority">
+          @for (p of priorities; track p) {
+            <mat-option [value]="p">{{ p }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Related Asset ID (optional)</mat-label>
+        <input matInput type="number" formControlName="assetId" placeholder="Leave blank if not applicable" />
+      </mat-form-field>
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/dashboard/requests">Cancel</a>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving">
+          @if (saving) { <mat-spinner diameter="18" /> } @else { Submit Request }
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<style>
+  .form-card { max-width: 680px; margin: 0 auto; }
+  .request-form { display: flex; flex-direction: column; gap: 4px; }
+  .full-width { width: 100%; }
+  .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+  .approval-banner {
+    display: flex; align-items: center; gap: 8px;
+    background: #e3f2fd; color: #1565c0;
+    padding: 12px 16px; border-radius: 4px;
+    margin-bottom: 16px; font-size: 14px;
+  }
+  .approval-tag { font-size: 12px; color: #e65100; }
+</style>

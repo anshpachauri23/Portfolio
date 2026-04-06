@@ -1,0 +1,742 @@
+/* BuckeyeMealPlanner Styles */
+/* Buckeye UX Design System colors + typography */
+
+@import url("https://assets.bux.osu.edu/bux-webfonts2/bux-webfonts2.css");
+
+:root {
+  --osu-scarlet: #bb0000;
+  --osu-scarlet-dark: #990000;
+  --osu-gray: #666666;
+  --osu-gray-light: #f5f5f5;
+  --osu-gray-medium: #e8e8e8;
+  --osu-black: #212121;
+  --osu-white: #ffffff;
+  --body-text: #333333;
+  --border: #ddd;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "BuckeyeSans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  color: var(--body-text);
+  background: var(--osu-white);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ─── Top Bar ─── */
+.osu-topbar {
+  background: var(--osu-scarlet);
+  color: var(--osu-white);
+  padding: 0.75rem 0;
+}
+
+.osu-topbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.osu-logo {
+  font-family: "BuckeyeSerif", "Georgia", serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--osu-white);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+}
+
+.osu-topbar-text {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* ─── Page Header ─── */
+.page-header {
+  background: var(--osu-gray-light);
+  border-bottom: 3px solid var(--osu-scarlet);
+  padding: 2rem 0;
+}
+
+.page-header h1 {
+  font-family: "BuckeyeSerif", "Georgia", serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--osu-black);
+  margin: 0 0 0.25rem;
+}
+
+.page-header p {
+  color: var(--osu-gray);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.data-badge {
+  display: inline-block;
+  background: var(--osu-white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  color: var(--osu-gray);
+  margin-top: 0.5rem;
+}
+
+/* ─── Cards ─── */
+.section-card {
+  background: var(--osu-white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--card-shadow);
+}
+
+.section-card .card-header {
+  background: var(--osu-gray-light);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 1.25rem;
+  font-family: "BuckeyeSerif", "Georgia", serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--osu-black);
+}
+
+.section-card .card-body {
+  padding: 1.25rem;
+}
+
+/* ─── Form Controls ─── */
+.form-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--osu-black);
+  margin-bottom: 0.3rem;
+}
+
+.form-select,
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--body-text);
+  background: var(--osu-white);
+  transition: border-color 0.15s ease;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: var(--osu-scarlet);
+  box-shadow: 0 0 0 2px rgba(187, 0, 0, 0.12);
+  outline: none;
+}
+
+.form-text {
+  font-size: 0.78rem;
+  color: var(--osu-gray);
+}
+
+/* ─── Toggle Switches ─── */
+.form-check-input:checked {
+  background-color: var(--osu-scarlet);
+  border-color: var(--osu-scarlet);
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ─── Sliders ─── */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: opacity 0.2s ease;
+}
+
+.slider-row > * + * {
+  margin-left: 0.75rem;
+}
+
+@supports (gap: 0.75rem) {
+  .slider-row > * + * {
+    margin-left: 0;
+  }
+}
+
+.slider-row.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.slider-value {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--osu-scarlet);
+  min-width: 55px;
+  text-align: right;
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--osu-scarlet);
+}
+
+.form-range::-moz-range-thumb {
+  background: var(--osu-scarlet);
+}
+
+/* ─── Buttons ─── */
+.btn-osu {
+  background: var(--osu-scarlet);
+  color: var(--osu-white);
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: background 0.2s ease;
+}
+
+.btn-osu:hover {
+  background: var(--osu-scarlet-dark);
+  color: var(--osu-white);
+}
+
+.btn-osu:disabled {
+  opacity: 0.6;
+}
+
+.btn-osu-outline {
+  background: transparent;
+  color: var(--osu-scarlet);
+  border: 2px solid var(--osu-scarlet);
+  border-radius: 4px;
+  padding: 0.45rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.btn-osu-outline:hover {
+  background: var(--osu-scarlet);
+  color: var(--osu-white);
+}
+
+/* ─── Plan Results ─── */
+.plan-header-bar {
+  background: var(--osu-gray-light);
+  border-bottom: 3px solid var(--osu-scarlet);
+  padding: 1.25rem 0;
+}
+
+.plan-header-bar h1 {
+  font-family: "BuckeyeSerif", "Georgia", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--osu-black);
+  margin: 0;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: var(--osu-white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  padding: 1.25rem;
+}
+
+.stat-card .stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--osu-gray);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card .stat-value {
+  font-family: "BuckeyeSerif", "Georgia", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--osu-black);
+}
+
+.stat-card.protein {
+  border-top: 3px solid #2e7d32;
+}
+
+.stat-card.protein .stat-value {
+  color: #2e7d32;
+}
+
+.stat-card.carbs {
+  border-top: 3px solid #e65100;
+}
+
+.stat-card.carbs .stat-value {
+  color: #e65100;
+}
+
+.stat-card.calories {
+  border-top: 3px solid var(--osu-scarlet);
+}
+
+.stat-card.calories .stat-value {
+  color: var(--osu-scarlet);
+}
+
+.stat-goal {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+/* Day Accordion */
+.day-accordion .accordion-item {
+  border: 1px solid var(--border);
+  border-radius: 6px !important;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.day-accordion .accordion-button {
+  background: var(--osu-gray-light);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--osu-black);
+  padding: 0.85rem 1.25rem;
+}
+
+.day-accordion .accordion-button:not(.collapsed) {
+  background: var(--osu-gray-light);
+  color: var(--osu-black);
+  box-shadow: none;
+}
+
+.day-accordion .accordion-button:focus {
+  box-shadow: none;
+  border-color: var(--border);
+}
+
+.day-summary {
+  font-size: 0.78rem;
+  color: var(--osu-gray);
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 0.75rem;
+}
+
+.table th {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--osu-gray);
+  border-bottom: 2px solid var(--border);
+}
+
+.table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.table tfoot td {
+  font-weight: 700;
+  border-top: 2px solid var(--border);
+}
+
+.place-name {
+  color: var(--osu-scarlet);
+  font-weight: 500;
+}
+
+/* ─── Swap Button ─── */
+.btn-swap {
+  background: transparent;
+  color: var(--osu-gray);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-swap:hover {
+  background: var(--osu-scarlet);
+  color: var(--osu-white);
+  border-color: var(--osu-scarlet);
+}
+
+/* Swap modal option items */
+.swap-option {
+  border: 1px solid var(--border) !important;
+  padding: 0.75rem 1rem !important;
+  margin-bottom: 0.35rem;
+  border-radius: 6px !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(187, 0, 0, 0.15);
+}
+
+.swap-option:hover,
+.swap-option:active {
+  background: var(--osu-gray-light) !important;
+  border-color: var(--osu-scarlet) !important;
+}
+
+/* ─── Campus Area Checkboxes ─── */
+.campus-areas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.campus-areas > * {
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+@supports (gap: 1rem) {
+  .campus-areas > * {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+.campus-areas .form-check {
+  padding-left: 1.75rem;
+}
+
+/* ─── Footer ─── */
+.osu-footer {
+  background: var(--osu-black);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 1.5rem 0;
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stat-card .stat-value {
+    font-size: 1.3rem;
+  }
+
+  .plan-header-bar .container {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .plan-header-bar .d-flex.align-items-center.gap-2 {
+    margin-top: 0.75rem;
+    width: 100%;
+  }
+
+  .day-summary {
+    display: none;
+  }
+
+  .table {
+    font-size: 0.82rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.4rem 0.35rem;
+  }
+
+  .btn-swap {
+    padding: 0.15rem 0.35rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* ─── Allergen Button Checkboxes ─── */
+.allergen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.allergen-btn {
+  display: block;
+  text-align: center;
+  padding: 0.5rem 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: var(--osu-white);
+  color: var(--osu-black);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.allergen-btn:hover {
+  border-color: var(--osu-scarlet);
+  background-color: var(--osu-gray-light);
+}
+
+.allergen-checkbox {
+  display: none;
+  /* Hide the actual checkbox input */
+}
+
+/* When the hidden checkbox is checked, style the adjacent label */
+.allergen-checkbox:checked+.allergen-btn {
+  background-color: var(--osu-scarlet);
+  border-color: var(--osu-scarlet);
+  color: var(--osu-white);
+}
+
+/* Select dropdown arrows customization */
+select.form-select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23333333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+/* ─── Dark Mode Toggle ─── */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--osu-white);
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] {
+  --osu-gray-light: #1e1e1e;
+  --osu-gray-medium: #2a2a2a;
+  --osu-black: #e8e8e8;
+  --osu-white: #121212;
+  --body-text: #d4d4d4;
+  --border: #3a3a3a;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] body {
+  background: #121212;
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-control {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] select.form-select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23d4d4d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+[data-theme="dark"] .table {
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .table th {
+  color: #999;
+}
+
+[data-theme="dark"] .accordion-button {
+  background: #1e1e1e;
+  color: #e8e8e8;
+}
+
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+  background: #1e1e1e;
+  color: #e8e8e8;
+}
+
+[data-theme="dark"] .accordion-body {
+  background: #121212;
+}
+
+[data-theme="dark"] .accordion-item {
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .modal-content {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .modal-header {
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .btn-close {
+  filter: invert(1);
+}
+
+[data-theme="dark"] .text-muted {
+  color: #999 !important;
+}
+
+[data-theme="dark"] .text-dark {
+  color: #d4d4d4 !important;
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .osu-footer {
+  background: #0a0a0a;
+}
+
+[data-theme="dark"] .allergen-btn {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .allergen-btn:hover {
+  border-color: var(--osu-scarlet);
+  background-color: #2a2a2a;
+}
+
+[data-theme="dark"] .swap-option {
+  border-color: #3a3a3a !important;
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .swap-option:hover {
+  background: #2a2a2a !important;
+}
+
+[data-theme="dark"] .list-group-item {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .card {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .dropdown-menu {
+  background-color: #1e1e1e;
+  border-color: #3a3a3a;
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .dropdown-header {
+  color: #d4d4d4 !important;
+}
+
+[data-theme="dark"] .form-check-label {
+  color: #d4d4d4;
+}
+
+[data-theme="dark"] .alert-info {
+  background-color: #1a2a3a;
+  border-color: #2a4a6a;
+  color: #8ec8f0;
+}
+
+[data-theme="dark"] .form-text {
+  color: #888;
+}
+
+[data-theme="dark"] .page-header {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .plan-header-bar {
+  background: #1a1a1a;
+}
+
+/* ─── Shared Utilities ─── */
+.spinner-lg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.export-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  margin: 0 4px;
+}
+
+.budget-tracker-card {
+  border-left: 4px solid var(--osu-gray) !important;
+  opacity: 0.75;
+}
+
+.meal-times-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: var(--osu-gray);
+  margin-bottom: 10px;
+}
+
+/* Loading overlay */
+#loadingOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+#loadingOverlay .loading-content {
+  text-align: center;
+  max-width: 360px;
+  padding: 2rem;
+}
+
+#loadingOverlay .loading-phrase {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.3s ease;
+}
+
+#loadingOverlay .loading-sub {
+  color: #aaa;
+}

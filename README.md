@@ -7,7 +7,7 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 ### 📊 Quick Stats
 - 🎓 **3.6/4.0 GPA** | Expected Graduation: May 2026
 - 💼 **3 Internships** | NMT Security, Deloitte, Verzeo Edutech
-- 🚀 **15+ Projects** | Full-stack applications, AI/ML systems, distributed systems
+- 🚀 **17+ Projects** | Full-stack applications, AI/ML systems, distributed systems
 - 🏆 **2 AWS Certifications** | AI Practitioner & Cloud Practitioner
 - 📝 **Research Publication** | 22 citations on Fake News Detection
 - 👥 **Leadership** | Founder & President of Quantum Computing Club, Resident Advisor
@@ -50,8 +50,33 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 ### 🌐 Full-Stack Web Applications
 
+#### [BuckeyeMealPlanner - AI-Powered Meal Planning App](buckeye-meal-planner-main/)
+**🔗 [Live Demo](https://www.buckeyemealplanner.com) | Python, Flask, Google Gemini AI, Docker, GCP Cloud Run | 2026**
+- **Technology**: Python 3.12, Flask, Gunicorn, Google Gemini 2.5 Flash, Docker, GCP Cloud Run, GitHub Actions
+- **Description**: A personalized, AI-powered meal planning application for OSU students that generates 7-day meal plans based on real-time campus dining menus, dietary preferences, purchased meal plans, and USDA nutritional guidelines
+- **Features**:
+  - Real-time menu parsing of 5,900+ live menu items from 34 campus dining locations (Nutrislice API)
+  - Smart meal combining — identifies and connects base meals with add-ons
+  - Nutritional adherence with per-meal limits enforced via chain-of-thought prompting (protein/calorie/carb)
+  - Instant item swap with nutritionally-similar alternatives from the same dining location
+  - Supports 7 different OSU meal plan types integrated into generation rules
+  - Automated GitHub Actions workflow re-fetches fresh menu data daily at 5:00 AM ET
+- **Impact**: Deployed to GCP Cloud Run; surfaces hyper-local dining data for OSU students through AI-driven meal customization
+
+#### [Tech Asset & Service Management Portal](Tech-Asset-Lifecycle-Service-Management-Portal-main/)
+**🔗 [Live Demo](https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login) | Java, Spring Boot, Angular, PostgreSQL, Docker, GCP Cloud Run | 2026**
+- **Technology**: Java 21, Spring Boot 3.2, Spring Security (JWT), Angular 17+, Angular Material, TypeScript, PostgreSQL 16, Flyway, Docker, GCP Cloud Run
+- **Description**: A full-stack internal business application for managing company technology assets and service requests — employees request devices/repairs/software access, IT staff process and track requests, managers approve restricted items, and admins manage users and roles
+- **Features**:
+  - Role-based access control (Admin, Manager, Technician, Employee) with JWT authentication
+  - Full asset lifecycle tracking: request → approval → delivery → repair → retirement
+  - Swagger UI API documentation and Flyway database migrations
+  - Containerized full-stack deployment with Docker Compose (frontend Nginx + backend + PostgreSQL)
+  - Comprehensive test suite: backend unit/integration tests (Maven) and frontend unit tests (Angular)
+- **Impact**: End-to-end enterprise asset management system with complete audit trail and multi-role workflows deployed on GCP
+
 #### [Personal Portfolio Website](personal-portfolio-website-main/) 
-**🔗 [Live Demo](https://personal-portfolio-tau-navy.vercel.app/) | React, Next.js, TypeScript, Tailwind CSS**
+**🔗 [Live Demo](https://www.anshpachauri.com/) | React, Next.js, TypeScript, Tailwind CSS**
 - **Technology**: React 18, Next.js 14, TypeScript, Tailwind CSS, Vite, Lucide React, Radix UI
 - **Description**: Modern, responsive portfolio website showcasing professional experience, projects, and skills
 - **Features**:
@@ -228,7 +253,9 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 
 **Try out my deployed projects:**
 
-- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **Personal Portfolio**: [https://www.anshpachauri.com/](https://www.anshpachauri.com/)
+- **BuckeyeMealPlanner**: [https://www.buckeyemealplanner.com](https://www.buckeyemealplanner.com)
+- **Tech Asset Portal**: [https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login](https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login)
 - **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
 - **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
@@ -238,7 +265,7 @@ I'm a passionate Computer Science and Engineering student at **The Ohio State Un
 - **Phone**: +1 6144939393 / +91 8076966625
 - **LinkedIn**: [ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
-- **Website**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **Website**: [https://www.anshpachauri.com/](https://www.anshpachauri.com/)
 
 ## 📁 Repository Structure
 
@@ -248,8 +275,12 @@ Portfolio/
 ├── CONTACT.md                   # Contact information and availability
 ├── SKILLS.md                    # Technical skills and achievements
 ├── PROJECTS_OVERVIEW.md         # Comprehensive project showcase
+├── buckeye-meal-planner-main/          # AI-Powered Meal Planning App
+│   └── 🔗 Live: https://www.buckeyemealplanner.com
+├── Tech-Asset-Lifecycle-Service-Management-Portal-main/  # Enterprise Asset Management
+│   └── 🔗 Live: https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login
 ├── personal-portfolio-website-main/    # React/Next.js Portfolio Website
-│   └── 🔗 Live: https://personal-portfolio-tau-navy.vercel.app/
+│   └── 🔗 Live: https://www.anshpachauri.com/
 ├── recipe-socialMedia-personal-main/  # Full-Stack Social Media Platform
 │   └── 🔗 Live: https://recipe-social-media-personal.vercel.app/auth/login
 ├── JEAR-ecommerce-CSE5234-main/  # E-commerce Platform
@@ -269,7 +300,7 @@ Portfolio/
 
 ## 📚 Additional Resources
 
-- **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/) - Interactive showcase of my work
+- **Portfolio Website**: [www.anshpachauri.com](https://www.anshpachauri.com/) - Interactive showcase of my work
 - **Project Documentation**: Each project directory contains detailed README files with setup instructions, technical specifications, and usage guides
 - **Source Code**: All projects include complete source code and are available for review
 

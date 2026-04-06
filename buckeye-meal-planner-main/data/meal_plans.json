@@ -1,0 +1,56 @@
+{
+  "Scarlet 14": {
+    "Visits": "14",
+    "Visit Exchange": "Included",
+    "Dining Dollars": "200",
+    "BuckID Cash": "150",
+    "Optional Plus Plan": "Not Included",
+    "Availability note": "Available to all Columbus campus students",
+    "Price per Semester (TG 26)": "2,895"
+  },
+  "Gray 10": {
+    "Visits": "10",
+    "Visit Exchange": "Included",
+    "Dining Dollars": "200",
+    "BuckID Cash": "150",
+    "Optional Plus Plan": "Not Included",
+    "Availability note": "Available to all Columbus campus students",
+    "Price per Semester (TG 26)": "2,430"
+  },
+  "Traditions": {
+    "Visits": "Access every hour",
+    "Visit Exchange": "Not Included",
+    "Dining Dollars": "100",
+    "BuckID Cash": "Option to add",
+    "Optional Plus Plan": "Included",
+    "Availability note": "Available to all Columbus campus students",
+    "Price per Semester (TG 26)": "2,373"
+  },
+  "Declining Balance": {
+    "Visits": "Not Included",
+    "Visit Exchange": "Not Included",
+    "Dining Dollars": "1,679",
+    "BuckID Cash": "Option to add",
+    "Optional Plus Plan": "Not Included",
+    "Availability note": "Not Included – second year or higher only",
+    "Price per Semester (TG 26)": "2,583"
+  },
+  "Carmen 1": {
+    "Visits": "Not Included",
+    "Visit Exchange": "Not Included",
+    "Dining Dollars": "340",
+    "BuckID Cash": "Option to add",
+    "Optional Plus Plan": "Not Included",
+    "Availability note": "Not Included – off-campus residents only",
+    "Price per Semester (TG 26)": "523"
+  },
+  "Carmen 2": {
+    "Visits": "Not Included",
+    "Visit Exchange": "Not Included",
+    "Dining Dollars": "665",
+    "BuckID Cash": "Option to add",
+    "Optional Plus Plan": "Not Included",
+    "Availability note": "Not Included – off-campus residents only",
+    "Price per Semester (TG 26)": "1,023"
+  }
+}

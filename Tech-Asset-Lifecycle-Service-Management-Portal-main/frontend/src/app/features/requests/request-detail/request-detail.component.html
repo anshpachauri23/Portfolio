@@ -1,0 +1,243 @@
+@if (loading) {
+  <mat-spinner diameter="48" class="spinner" />
+} @else if (request) {
+  <div class="page-header">
+    <div>
+      <h1>{{ request.title }}</h1>
+      <span class="request-number">{{ request.requestNumber }}</span>
+    </div>
+    <div class="header-actions">
+      <app-status-badge [status]="request.status" />
+      @if (validNextStatuses.length > 0) {
+        <mat-form-field appearance="outline" class="status-select">
+          <mat-label>Update Status</mat-label>
+          <mat-select (selectionChange)="changeStatus($event.value)" placeholder="Select…">
+            @for (s of validNextStatuses; track s) {
+              <mat-option [value]="s">{{ s }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+    </div>
+  </div>
+
+  @if (request.approvalRequired && request.status === 'PENDING_APPROVAL') {
+    <div class="approval-banner">
+      <mat-icon>pending</mat-icon>
+      This request requires manager approval before it can proceed.
+    </div>
+  }
+
+  <div class="detail-grid">
+    <mat-card>
+      <mat-card-header><mat-card-title>Request Details</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item><span matListItemTitle>Type</span><span matListItemLine>{{ request.requestTypeName }}</span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Priority</span><span matListItemLine><app-status-badge [status]="request.priority" /></span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Requester</span><span matListItemLine>{{ request.requesterName }}</span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Assigned To</span><span matListItemLine>{{ request.assignedToName ?? '—' }}</span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Asset</span><span matListItemLine>{{ request.assetId ?? '—' }}</span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Due Date</span><span matListItemLine>{{ (request.dueDate | date:'mediumDate') ?? '—' }}</span></mat-list-item>
+          <mat-list-item><span matListItemTitle>Created</span><span matListItemLine>{{ request.createdAt | date:'medium' }}</span></mat-list-item>
+        </mat-list>
+        <mat-divider />
+        <div class="description">
+          <strong>Description</strong>
+          <p>{{ request.description }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header><mat-card-title>Comments ({{ request.comments.length }})</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="comment-thread">
+          @if (request.comments.length === 0) {
+            <p class="empty">No comments yet.</p>
+          } @else {
+            @for (comment of request.comments; track comment.id) {
+              <div class="comment">
+                <div class="comment-header">
+                  <strong>{{ comment.authorName }}</strong>
+                  <span class="comment-date">{{ comment.createdAt | date:'medium' }}</span>
+                </div>
+                <div class="comment-body">{{ comment.body }}</div>
+              </div>
+            }
+          }
+        </div>
+
+        @if (canComment()) {
+          <mat-divider class="comment-divider" />
+          <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Add a comment</mat-label>
+              <textarea matInput formControlName="body" rows="3"></textarea>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid || submittingComment">
+              @if (submittingComment) { <mat-spinner diameter="18" /> } @else { Post Comment }
+            </button>
+          </form>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  @if (canFulfil()) {
+    <mat-card class="fulfil-card">
+      <mat-card-header>
+        <mat-card-title class="fulfil-title">
+          <mat-icon color="primary">inventory_2</mat-icon>
+          Fulfil Request
+        </mat-card-title>
+        <mat-card-subtitle>
+          Select an available asset to assign to {{ request.requesterName }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        @if (availableAssets.length === 0) {
+          <div class="no-assets-notice">
+            <mat-icon>warning_amber</mat-icon>
+            <span>No assets are currently available. Add or free up an asset first.</span>
+          </div>
+        } @else {
+          <form [formGroup]="fulfilForm" (ngSubmit)="fulfil()" class="fulfil-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Available Asset</mat-label>
+              <mat-select formControlName="assetId">
+                @for (asset of availableAssets; track asset.id) {
+                  <mat-option [value]="asset.id">
+                    <strong>{{ asset.assetTag }}</strong>
+                    &nbsp;·&nbsp;{{ asset.assetType }}
+                    @if (asset.vendor) { &nbsp;·&nbsp;{{ asset.vendor }} }
+                    @if (asset.model) { &nbsp;{{ asset.model }} }
+                  </mat-option>
+                }
+              </mat-select>
+              @if (fulfilForm.controls.assetId.hasError('required')) {
+                <mat-error>Please select an asset</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Notes (optional)</mat-label>
+              <input matInput formControlName="notes" placeholder="e.g. Delivered to desk 4B, charger included" />
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="fulfil-btn"
+              [disabled]="fulfilForm.invalid || assigning"
+            >
+              @if (assigning) {
+                <mat-spinner diameter="18" />
+              } @else {
+                <mat-icon>check_circle</mat-icon>
+                Assign to {{ request.requesterName }}
+              }
+            </button>
+          </form>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (approvalSteps.length > 0) {
+    <mat-card class="section-card">
+      <mat-card-header><mat-card-title>Approval History</mat-card-title></mat-card-header>
+      <mat-card-content>
+        @for (step of approvalSteps; track step.id) {
+          <div class="approval-row">
+            <div class="approval-row-header">
+              <strong>{{ step.approverName }}</strong>
+              <app-status-badge [status]="step.decision" />
+            </div>
+            @if (step.comment) {
+              <div class="approval-comment">{{ step.comment }}</div>
+            }
+            @if (step.decidedAt) {
+              <div class="approval-date">{{ step.decidedAt | date:'medium' }}</div>
+            }
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <mat-card class="section-card">
+    <mat-card-header><mat-card-title>Attachments ({{ attachments.length }})</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <div style="margin-bottom: 12px;">
+        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
+        <button mat-raised-button (click)="fileInput.click()">
+          <mat-icon>attach_file</mat-icon> Upload File
+        </button>
+      </div>
+      @if (attachments.length === 0) {
+        <p style="color: #9e9e9e; font-style: italic;">No attachments.</p>
+      } @else {
+        @for (att of attachments; track att.id) {
+          <div class="attachment-row">
+            <div>
+              <a [href]="getDownloadUrl(att.id)" target="_blank">{{ att.fileName }}</a>
+              <span class="attachment-meta">
+                {{ (att.fileSize / 1024).toFixed(1) }} KB · {{ att.uploadedByName }} · {{ att.createdAt | date:'short' }}
+              </span>
+            </div>
+          </div>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+}
+
+<style>
+  .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .page-header h1 { margin: 0 0 4px; }
+  .request-number { font-size: 13px; color: #9e9e9e; font-family: monospace; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .status-select { width: 200px; }
+
+  .approval-banner { display: flex; align-items: center; gap: 8px; background: #fff3e0; color: #e65100; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px; font-size: 14px; }
+
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .description { padding: 16px 0 0; }
+  .description p { margin: 8px 0 0; color: #424242; line-height: 1.6; }
+
+  .comment-thread { max-height: 400px; overflow-y: auto; }
+  .comment { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+  .comment:last-child { border-bottom: none; }
+  .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .comment-date { font-size: 12px; color: #9e9e9e; }
+  .comment-body { font-size: 14px; color: #424242; line-height: 1.5; }
+  .comment-divider { margin: 16px 0; }
+  .comment-form { display: flex; flex-direction: column; gap: 8px; }
+
+  .fulfil-card { margin-top: 24px; border: 2px solid #e3f2fd; background: #fafeff; }
+  .fulfil-title { display: flex; align-items: center; gap: 8px; }
+  .fulfil-form { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; }
+  .fulfil-btn { display: flex; align-items: center; gap: 6px; align-self: flex-start; }
+  .no-assets-notice { display: flex; align-items: center; gap: 8px; color: #e65100; background: #fff3e0; padding: 12px 16px; border-radius: 4px; font-size: 14px; }
+
+  .section-card { margin-top: 24px; }
+  .approval-row { padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .approval-row:last-child { border-bottom: none; }
+  .approval-row-header { display: flex; justify-content: space-between; align-items: center; }
+  .approval-comment { font-size: 13px; color: #666; margin-top: 4px; }
+  .approval-date { font-size: 11px; color: #999; margin-top: 2px; }
+
+  .attachment-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+  .attachment-row:last-child { border-bottom: none; }
+  .attachment-meta { font-size: 12px; color: #999; margin-left: 8px; }
+
+  .full-width { width: 100%; }
+  .empty { color: #9e9e9e; font-style: italic; }
+  .spinner { display: block; margin: 64px auto; }
+
+  @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+</style>

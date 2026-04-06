@@ -1,0 +1,99 @@
+@if (loading) {
+  <mat-spinner diameter="48" class="spinner" />
+} @else {
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'Edit Asset' : 'New Asset' }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="asset-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Asset Tag *</mat-label>
+            <input matInput formControlName="assetTag" />
+            @if (form.controls.assetTag.hasError('required')) {
+              <mat-error>Asset tag is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Serial Number</mat-label>
+            <input matInput formControlName="serialNumber" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Asset Type *</mat-label>
+            <input matInput formControlName="assetType" placeholder="e.g. LAPTOP, MONITOR" />
+            @if (form.controls.assetType.hasError('required')) {
+              <mat-error>Asset type is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Vendor</mat-label>
+            <input matInput formControlName="vendor" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Model</mat-label>
+            <input matInput formControlName="model" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Purchase Date</mat-label>
+            <input matInput [matDatepicker]="purchasePicker" formControlName="purchaseDate" />
+            <mat-datepicker-toggle matSuffix [for]="purchasePicker" />
+            <mat-datepicker #purchasePicker />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Warranty Expiry</mat-label>
+            <input matInput [matDatepicker]="warrantyPicker" formControlName="warrantyExpiry" />
+            <mat-datepicker-toggle matSuffix [for]="warrantyPicker" />
+            <mat-datepicker #warrantyPicker />
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cost Center</mat-label>
+          <input matInput formControlName="costCenter" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes" rows="3"></textarea>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <a mat-stroked-button routerLink="/dashboard/assets">Cancel</a>
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+            @if (saving) { <mat-spinner diameter="18" /> }
+            @else { {{ isEditMode ? 'Update' : 'Create' }} }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+}
+
+<style>
+  .form-card { max-width: 800px; margin: 0 auto; }
+  .asset-form { display: flex; flex-direction: column; gap: 0; }
+  .form-row { display: flex; gap: 16px; }
+  .flex-1 { flex: 1; }
+  .full-width { width: 100%; }
+  .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+  .spinner { display: block; margin: 64px auto; }
+</style>

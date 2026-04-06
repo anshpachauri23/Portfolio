@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Plan — BuckeyeMealPlanner</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.75in 0.65in;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+      color: #212121;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* ── Header ── */
+    .pdf-header {
+      border-bottom: 3px solid #bb0000;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .pdf-header h1 {
+      font-size: 17pt;
+      font-weight: 700;
+      color: #bb0000;
+      margin: 0 0 2px;
+    }
+    .pdf-header .meta {
+      font-size: 8pt;
+      color: #666;
+    }
+
+    /* ── Summary Stats ── */
+    .stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .stat-box {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 6px 10px;
+      text-align: center;
+    }
+    .stat-box .label { font-size: 7.5pt; color: #666; text-transform: uppercase; letter-spacing: .04em; }
+    .stat-box .value { font-size: 13pt; font-weight: 700; color: #bb0000; }
+
+    /* ── Day Block ── */
+    .day-block { margin-bottom: 14px; page-break-inside: avoid; }
+    .day-heading {
+      background: #bb0000;
+      color: #fff;
+      font-size: 9.5pt;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px 3px 0 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+    }
+    thead tr { background: #f5f5f5; }
+    th {
+      padding: 4px 6px;
+      text-align: left;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 1px solid #ddd;
+    }
+    th.num, td.num { text-align: right; }
+    td {
+      padding: 4px 6px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .tfoot-row td {
+      border-top: 1px solid #ccc;
+      font-weight: 700;
+      background: #fafafa;
+      font-size: 8pt;
+    }
+    .place { color: #666; font-size: 8pt; }
+
+    /* ── Footer ── */
+    .pdf-footer {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 6px;
+      font-size: 7.5pt;
+      color: #999;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pdf-header">
+    <h1>BuckeyeMealPlanner — Weekly Meal Plan</h1>
+    <div class="meta">
+      {{ inputs.meal_plan }} &nbsp;·&nbsp; {{ inputs.diet | capitalize }}
+      &nbsp;·&nbsp; {{ inputs.weekday_meals }} weekday / {{ inputs.weekend_meals }} weekend meals per day
+      &nbsp;·&nbsp; Generated {{ generated_date }}
+    </div>
+  </div>
+
+  {% if plan.summary %}
+  <div class="stats">
+    <div class="stat-box">
+      <div class="label">Avg Daily Protein</div>
+      <div class="value">{{ plan.summary.daily_protein_avg }}g</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">Avg Daily Carbs</div>
+      <div class="value">{{ plan.summary.daily_carbs_avg }}g</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">Avg Daily Calories</div>
+      <div class="value">{{ plan.summary.daily_calories_avg }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+  {% for day in days %}
+  {% set meals = plan.plan.get(day, []) %}
+  {% if meals %}
+  <div class="day-block">
+    <div class="day-heading">{{ day }}</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:62px">Time</th>
+          <th>Item</th>
+          <th>Location</th>
+          <th class="num" style="width:52px">Protein</th>
+          <th class="num" style="width:44px">Carbs</th>
+          <th class="num" style="width:56px">Calories</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for meal in meals %}
+        <tr>
+          <td class="place">{{ meal.time }}</td>
+          <td>{{ meal.item }}</td>
+          <td class="place">{{ meal.place }}</td>
+          <td class="num">{{ meal.protein }}g</td>
+          <td class="num">{{ meal.carbs }}g</td>
+          <td class="num">{{ meal.calories }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        {% set day_prot = meals | sum(attribute='protein') %}
+        {% set day_carb = meals | sum(attribute='carbs') %}
+        {% set day_cal  = meals | sum(attribute='calories') %}
+        <tr class="tfoot-row">
+          <td colspan="3">Daily Total</td>
+          <td class="num">{{ day_prot }}g</td>
+          <td class="num">{{ day_carb }}g</td>
+          <td class="num">{{ day_cal }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <div class="pdf-footer">
+    BuckeyeMealPlanner &nbsp;·&nbsp; Powered by Google Gemini &nbsp;·&nbsp; buckeyemealplanner.app
+  </div>
+
+</body>
+</html>

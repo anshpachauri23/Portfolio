@@ -7,7 +7,9 @@
 - **[AI Class Projects](AI%20class%20projects/)** - Search Algorithms, Machine Learning, NLP, Neural Networks
 
 ### 🌐 Full-Stack Web Applications
-- **[Personal Portfolio Website](personal-portfolio-website-main/)** 🔗 [Live Demo](https://personal-portfolio-tau-navy.vercel.app/) - React 18, Next.js 14, TypeScript, Tailwind CSS
+- **[BuckeyeMealPlanner](buckeye-meal-planner-main/)** 🔗 [Live Demo](https://www.buckeyemealplanner.com) - Python, Flask, Google Gemini 2.5 Flash, Docker, GCP Cloud Run
+- **[Tech Asset & Service Management Portal](Tech-Asset-Lifecycle-Service-Management-Portal-main/)** 🔗 [Live Demo](https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login) - Java 21, Spring Boot, Angular 17, PostgreSQL, Docker, GCP
+- **[Personal Portfolio Website](personal-portfolio-website-main/)** 🔗 [Live Demo](https://www.anshpachauri.com/) - React 18, Next.js 14, TypeScript, Tailwind CSS
 - **[RecipeShare - Social Recipe Network](recipe-socialMedia-personal-main/)** 🔗 [Live Demo](https://recipe-social-media-personal.vercel.app/auth/login) - Next.js 14, TypeScript, Go, PostgreSQL, AWS S3
 - **[JEAR E-commerce Platform](JEAR-ecommerce-CSE5234-main/)** 🔗 [Live Demo](https://jear-ecommerce-cse-5234.vercel.app/) - React.js, Node.js, AWS Lambda, DynamoDB
 - **[PeerEval - Presentation Platform](PeerEval/)** - Ruby on Rails, MySQL
@@ -52,7 +54,7 @@
 
 ### Technology Stack Coverage
 - **Frontend**: React.js, Next.js, HTML5, CSS3, JavaScript, TypeScript
-- **Backend**: Node.js, Go, Ruby on Rails, Express.js
+- **Backend**: Node.js, Go, Ruby on Rails, Express.js, Java Spring Boot, Flask
 - **Cloud**: AWS (Lambda, S3, RDS, DynamoDB, API Gateway, Bedrock)
 - **AI/ML**: TensorFlow, Keras, OpenCV, scikit-learn
 - **Databases**: MySQL, PostgreSQL, DynamoDB
@@ -61,7 +63,9 @@
 ## 🚀 Deployment & Live Demos
 
 ### Available Live Projects
-- **Personal Portfolio Website**: 🔗 [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **Personal Portfolio Website**: 🔗 [https://www.anshpachauri.com/](https://www.anshpachauri.com/)
+- **BuckeyeMealPlanner**: 🔗 [https://www.buckeyemealplanner.com](https://www.buckeyemealplanner.com)
+- **Tech Asset & Service Management Portal**: 🔗 [https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login](https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login)
   - Modern, responsive portfolio showcasing all projects and experience
 - **RecipeShare - Social Recipe Network**: 🔗 [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
   - Full-stack social media platform for sharing recipes with Instagram-like features

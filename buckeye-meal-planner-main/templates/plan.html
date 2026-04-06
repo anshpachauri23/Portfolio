@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Meal Plan | BuckeyeMealPlanner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="osu-topbar">
+        <div class="container">
+            <a href="/" class="osu-logo">BuckeyeMealPlanner</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <span id="themeIcon">&#9790;</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="plan-header-bar">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <div>
+                <h1>Your Weekly Meal Plan</h1>
+                <p class="text-muted mb-0 small">
+                    {{ inputs.meal_plan }} · {{ inputs.diet | capitalize }} ·
+                    {{ inputs.weekday_meals }} weekday / {{ inputs.weekend_meals }} weekend meals per day
+                </p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <form action="/generate" method="POST" id="reFilterForm" class="d-flex align-items-center m-0">
+                    <!-- Hidden fields to preserve other settings -->
+                    <input type="hidden" name="meal_plan" value="{{ inputs.meal_plan }}">
+                    <input type="hidden" name="diet" value="{{ inputs.diet }}">
+                    <input type="hidden" name="weekday_meals" value="{{ inputs.weekday_meals }}">
+                    <input type="hidden" name="weekend_meals" value="{{ inputs.weekend_meals }}">
+                    {% if constraints.get('min_protein') %}
+                    <input type="hidden" name="use_protein" value="on">
+                    <input type="hidden" name="min_protein" value="{{ constraints.min_protein }}">
+                    {% endif %}
+                    {% if constraints.get('max_carbs') %}
+                    <input type="hidden" name="use_carbs" value="on">
+                    <input type="hidden" name="max_carbs" value="{{ constraints.max_carbs }}">
+                    {% endif %}
+                    {% if constraints.get('max_calories') %}
+                    <input type="hidden" name="use_calories" value="on">
+                    <input type="hidden" name="max_calories" value="{{ constraints.max_calories }}">
+                    {% endif %}
+                    {% for allergen in inputs.get('allergens', []) %}
+                    <input type="hidden" name="allergens" value="{{ allergen }}">
+                    {% endfor %}
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary py-2 dropdown-toggle me-2" type="button"
+                            data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                            Campus: {{ inputs.campus_areas | join(', ') }}
+                        </button>
+                        <div class="dropdown-menu p-3 shadow-sm" style="min-width: 200px;">
+                            <h6 class="dropdown-header px-0 text-dark fw-bold">Filter Locations</h6>
+                            {% set all_areas = ['South', 'North', 'West'] %}
+                            {% for area in all_areas %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="campus_areas" value="{{ area }}"
+                                    id="filter_{{ area }}" {% if area in inputs.campus_areas %}checked{% endif %}>
+                                <label class="form-check-label" for="filter_{{ area }}">{{ area }}</label>
+                            </div>
+                            {% endfor %}
+                            <button type="button" class="btn btn-sm btn-osu w-100 mt-2" onclick="handleApplyRefresh(this)">Apply & Refresh</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main class="container py-4">
+
+        <!-- Hours adjustment notice -->
+        {% if plan.hours_swaps %}
+        <div class="alert alert-info small mb-4">
+            <strong>Note:</strong> {{ plan.hours_swaps|length }} item(s) were automatically adjusted because
+            the original location was closed at the scheduled time or the menu type didn't match the meal period.
+            <details class="mt-2">
+                <summary>View adjustments</summary>
+                <ul class="mt-2 mb-0">
+                    {% for swap in plan.hours_swaps %}
+                    <li><strong>{{ swap.day }} {{ swap.time }}:</strong> {{ swap.original }} &rarr; {{ swap.replacement }} <span class="text-muted">({{ swap.reason }})</span></li>
+                    {% endfor %}
+                </ul>
+            </details>
+        </div>
+        {% endif %}
+
+        <!-- Budget Tracker (under development — backend still computes mock prices) -->
+        {% if plan.budget %}
+        <div class="card mb-4 border-0 shadow-sm budget-tracker-card">
+            <div class="card-body text-center py-4">
+                <h5 class="card-title fw-bold mb-2">Weekly Budget Forecast</h5>
+                <p class="text-muted mb-0">
+                    Budget tracking is under development and will be available once official pricing data is integrated.
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Summary Stats -->
+        {% if plan.summary %}
+        <div class="row g-3 mb-4" id="summaryCards">
+            <div class="col-md-4">
+                <div class="stat-card protein">
+                    <div class="stat-label">Avg Daily Protein</div>
+                    <div class="stat-value" id="avgProtein">{{ plan.summary.daily_protein_avg }}g</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card carbs">
+                    <div class="stat-label">Avg Daily Carbs</div>
+                    <div class="stat-value" id="avgCarbs">{{ plan.summary.daily_carbs_avg }}g</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card calories">
+                    <div class="stat-label">Avg Daily Calories</div>
+                    <div class="stat-value" id="avgCalories">{{ plan.summary.daily_calories_avg }}</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Days -->
+        {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+
+        <div class="accordion day-accordion" id="weekAccordion">
+            {% for day in days %}
+            {% set meals = plan.plan.get(day, []) %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button {% if loop.index > 1 %}collapsed{% endif %}" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#day{{ loop.index }}">
+                        {{ day }}
+                        <span class="day-summary" id="summary_{{ day }}">
+                            {% set day_cal = meals | sum(attribute='calories') if meals else 0 %}
+                            {% set day_prot = meals | sum(attribute='protein') if meals else 0 %}
+                            {% set day_carb = meals | sum(attribute='carbs') if meals else 0 %}
+                            {{ day_cal }} cal · {{ day_prot }}g protein · {{ day_carb }}g carbs
+                        </span>
+                    </button>
+                </h2>
+                <div id="day{{ loop.index }}"
+                    class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}"
+                    data-bs-parent="#weekAccordion">
+                    <div class="accordion-body p-0">
+                        {% if meals %}
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width:90px">Time</th>
+                                        <th>Item</th>
+                                        <th>Location</th>
+                                        <!-- Cost column hidden until pricing data available -->
+                                        <!-- <th style="width:160px">Cost</th> -->
+                                        <th class="text-end">Protein</th>
+                                        <th class="text-end">Carbs</th>
+                                        <th class="text-end">Calories</th>
+                                        <th style="width:70px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for meal in meals %}
+                                    <tr id="row_{{ day }}_{{ loop.index0 }}" data-day="{{ day }}"
+                                        data-idx="{{ loop.index0 }}">
+                                        <td class="text-muted">{{ meal.time }}</td>
+                                        <td class="meal-item-name">{{ meal.item }}</td>
+                                        <td class="place-name meal-item-place">
+                                            {{ meal.place }}
+                                            <a href="https://www.google.com/maps/search/?api=1&query={{ ((meal.place ~ ' ' ~ meal.address) if meal.address else (meal.place ~ ' Ohio State University Columbus')) | urlencode }}"
+                                                target="_blank" title="View on map" class="ms-1 text-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                    fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                        <!-- <td class="text-muted small meal-item-cost">{{ meal.cost_text }}</td> -->
+                                        <td class="text-end meal-item-protein">{{ meal.protein }}g</td>
+                                        <td class="text-end meal-item-carbs">{{ meal.carbs }}g</td>
+                                        <td class="text-end meal-item-calories">{{ meal.calories }}</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-swap btn-sm"
+                                                onclick="openSwap('{{ day }}', {{ loop.index0 }}, {{ meal.calories }}, {{ meal.protein }}, {{ meal.carbs }}, '{{ meal.item | replace('\'', '\\\'') }}')"
+                                                title="Swap this item">Swap</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr id="totals_{{ day }}">
+                                        <!-- Cost total hidden until pricing data available -->
+                                        <td colspan="3" class="fw-bold">Daily Total</td>
+                                        <td class="text-end fw-bold total-protein">{{ day_prot }}g</td>
+                                        <td class="text-end fw-bold total-carbs">{{ day_carb }}g</td>
+                                        <td class="text-end fw-bold total-calories">{{ day_cal }}</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="text-muted p-3 mb-0">No meals planned for {{ day }}.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Export -->
+        <div class="section-card mt-4">
+            <div class="card-header">Export Meal Plan</div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap align-items-start gap-3 mb-3">
+                    <!-- Primary: Download .ics -->
+                    <a href="/api/export-calendar" class="btn btn-osu" download="buckeye-meal-plan.ics">
+                        Download .ics
+                    </a>
+                    <!-- Secondary: Save as PDF -->
+                    <button class="btn btn-osu-outline" id="exportPdfBtn" onclick="downloadPdf()">
+                        Save as PDF
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="export-divider d-none d-sm-block"></div>
+
+                    <!-- Google Calendar per-day -->
+                    <div>
+                        <div class="form-text mb-1">Add to Google Calendar by day</div>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+                            {% for day in days %}
+                            {% if gcal_links.get(day) %}
+                            <a href="{{ gcal_links[day] }}" target="_blank" rel="noopener"
+                               class="btn btn-osu-outline btn-sm">{{ day[:3] }}</a>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="form-text mb-0 small">
+                    <strong>.ics</strong> works with Apple Calendar and Outlook — open the downloaded file.
+                    <strong>Google Calendar:</strong> use the day buttons above, or import via Settings &rarr; Import.
+                    <strong>Microsoft Teams:</strong> import via Outlook.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-osu">Generate Another Plan</a>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loadingOverlay" class="d-none">
+            <div class="loading-content">
+                <div class="spinner-border spinner-lg text-light mb-3" role="status"></div>
+                <p class="loading-phrase" id="loadingPhrase">Warming up the grill...</p>
+                <p class="loading-sub text-muted small">This usually takes 1-2 minutes</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Swap Modal -->
+    <div class="modal fade" id="swapModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Swap Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-3">Select an alternative with similar nutritional values:</p>
+                    <div id="swapLoading" class="text-center py-3">
+                        <div class="spinner-border spinner-border-sm text-muted"></div>
+                        <span class="text-muted ms-2">Finding alternatives...</span>
+                    </div>
+                    <div id="swapList" class="d-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="osu-footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 BuckeyeMealPlanner &middot; Powered by Google Gemini</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    <script>
+        // Loading overlay with rotating phrases
+        const loadingPhrases = [
+            "Warming up the grill...",
+            "Tossing the salad...",
+            "Balancing your macros...",
+            "Scouting Traditions menus...",
+            "Preheating the oven...",
+            "Chopping fresh veggies...",
+            "Seasoning to perfection...",
+            "Plating your week...",
+            "Stirring the soup pot...",
+            "Checking what's open on campus...",
+            "Rolling the perfect burrito...",
+            "Simmering the stir-fry...",
+            "Flipping pancakes...",
+            "Brewing something good...",
+            "Counting every gram of protein...",
+            "Slicing the avocado...",
+            "Taste-testing for quality...",
+            "Crunching the nutrition numbers...",
+            "Drizzling the finishing sauce...",
+            "Almost ready to serve...",
+        ];
+
+        let phraseInterval = null;
+
+        function showLoadingOverlay() {
+            var overlay = document.getElementById('loadingOverlay');
+            var phraseEl = document.getElementById('loadingPhrase');
+            overlay.classList.remove('d-none');
+            var idx = 0;
+            phraseEl.textContent = loadingPhrases[idx];
+            phraseInterval = setInterval(function () {
+                idx = (idx + 1) % loadingPhrases.length;
+                phraseEl.style.opacity = 0;
+                setTimeout(function () {
+                    phraseEl.textContent = loadingPhrases[idx];
+                    phraseEl.style.opacity = 1;
+                }, 300);
+            }, 2500);
+        }
+
+        // Context for swap API
+        const DIET = '{{ inputs.diet }}';
+        const ALLERGENS = {{ inputs.get('allergens', []) | tojson }};
+        let CAMPUS_AREAS = {{ inputs.campus_areas | tojson }};
+
+        let swapDay = null;
+        let swapIdx = null;
+        let swapModal = null;
+        let swapCache = {};
+
+        // Read the currently-checked campus area checkboxes
+        function getSelectedCampusAreas() {
+            const checked = document.querySelectorAll('#reFilterForm input[name="campus_areas"]:checked');
+            return Array.from(checked).map(cb => cb.value);
+        }
+
+        function getCashValue(costText) {
+            let m = costText.match(/\$([0-9\.]+)/);
+            return m ? parseFloat(m[1]) : 8.00;
+        }
+
+        function handleApplyRefresh(btn) {
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            setTimeout(function() {
+                btn.disabled = true;
+            }, 10);
+            showLoadingOverlay();
+            document.getElementById('reFilterForm').submit();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            swapModal = new bootstrap.Modal(document.getElementById('swapModal'));
+        });
+
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                var overlay = document.getElementById('loadingOverlay');
+                if (overlay) overlay.classList.add('d-none');
+                if (phraseInterval) clearInterval(phraseInterval);
+                var btn = document.querySelector('button[onclick="handleApplyRefresh(this)"]');
+                if (btn) {
+                    btn.innerHTML = 'Apply & Refresh';
+                    btn.disabled = false;
+                }
+            }
+        });
+
+        function openSwap(day, idx, cal, protein, carbs, itemName) {
+            swapDay = day;
+            swapIdx = idx;
+
+            // Always read the live checkbox state so swaps match the
+            // campus areas the user currently has selected.
+            CAMPUS_AREAS = getSelectedCampusAreas();
+
+            let cacheKey = `${day}_${idx}_${CAMPUS_AREAS.sort().join(',')}`;
+
+            document.getElementById('swapLoading').classList.remove('d-none');
+            document.getElementById('swapList').classList.add('d-none');
+            swapModal.show();
+
+            if (swapCache[cacheKey]) {
+                document.getElementById('swapLoading').classList.add('d-none');
+                renderSwapList(swapCache[cacheKey]);
+                return;
+            }
+
+            fetch('/api/alternatives', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    calories: cal,
+                    protein: protein,
+                    carbs: carbs,
+                    diet: DIET,
+                    campus_areas: CAMPUS_AREAS,
+                    allergens: ALLERGENS,
+                    exclude_item: itemName
+                })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('swapLoading').classList.add('d-none');
+                    if (!data.alternatives || data.alternatives.length === 0) {
+                        const list = document.getElementById('swapList');
+                        list.innerHTML = '<p class="text-muted">No similar alternatives found for the selected campus areas.</p>';
+                        list.classList.remove('d-none');
+                        return;
+                    }
+                    swapCache[cacheKey] = data.alternatives;
+                    renderSwapList(data.alternatives);
+                })
+                .catch(err => {
+                    document.getElementById('swapLoading').classList.add('d-none');
+                    document.getElementById('swapList').innerHTML = '<p class="text-danger">Error loading alternatives.</p>';
+                    document.getElementById('swapList').classList.remove('d-none');
+                });
+        }
+
+        function renderSwapList(alternatives) {
+            const list = document.getElementById('swapList');
+            list.classList.remove('d-none');
+
+            let html = '<div class="list-group">';
+            alternatives.forEach(alt => {
+                let encodedAlt = encodeURIComponent(JSON.stringify(alt)).replace(/'/g, "%27");
+                html += `
+            <button type="button" class="list-group-item list-group-item-action swap-option"
+                    onclick="selectSwap('${encodedAlt}')">
+              <div class="d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                  <strong>${alt.item}</strong>
+                  <div class="text-end small text-muted">
+                    <span>${alt.protein}g P</span> · <span>${alt.carbs}g C</span> · <span>${alt.calories} cal</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mt-1">
+                  <small class="text-muted">
+                    ${alt.place}
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(alt.place + (alt.address ? ' ' + alt.address : ' Ohio State University Columbus'))}" target="_blank" title="View on map" class="ms-1 text-muted" onclick="event.stopPropagation();">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                        </svg>
+                    </a>
+                  </small>
+                  <!-- Cost hidden until pricing data available -->
+                  <!-- <small class="text-success fw-bold">${alt.cost_text}</small> -->
+                </div>
+              </div>
+            </button>`;
+            });
+            html += '</div>';
+            list.innerHTML = html;
+        }
+
+        function selectSwap(encodedAltStr) {
+            const alt = JSON.parse(decodeURIComponent(encodedAltStr));
+            let cacheKey = `${swapDay}_${swapIdx}_${CAMPUS_AREAS.sort().join(',')}`;
+            const row = document.getElementById(`row_${swapDay}_${swapIdx}`);
+            if (!row) return;
+
+            let currentCashValue = parseFloat(row.dataset.cashPrice);
+            if (isNaN(currentCashValue)) {
+                const costEl = row.querySelector('.meal-item-cost');
+                currentCashValue = costEl ? getCashValue(costEl.textContent) : 8.00;
+            }
+
+            const costEl = row.querySelector('.meal-item-cost');
+            const currentItem = {
+                item: row.querySelector('.meal-item-name').textContent.trim(),
+                place: row.querySelector('.meal-item-place').firstChild.textContent.trim(),
+                cost_text: costEl ? costEl.textContent : '',
+                protein: parseInt(row.querySelector('.meal-item-protein').textContent) || 0,
+                carbs: parseInt(row.querySelector('.meal-item-carbs').textContent) || 0,
+                calories: parseInt(row.querySelector('.meal-item-calories').textContent) || 0,
+                cash_price: currentCashValue
+            };
+
+            const altIndex = swapCache[cacheKey].findIndex(a => a.item === alt.item);
+            if (altIndex !== -1) {
+                swapCache[cacheKey][altIndex] = currentItem;
+            } else {
+                swapCache[cacheKey].push(currentItem);
+            }
+
+            row.querySelector('.meal-item-name').textContent = alt.item;
+            row.querySelector('.meal-item-place').innerHTML = `
+                ${alt.place}
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(alt.place + (alt.address ? ' ' + alt.address : ' Ohio State University Columbus'))}"
+                    target="_blank" title="View on map" class="ms-1 text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                        fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                    </svg>
+                </a>
+            `;
+            const rowCostEl = row.querySelector('.meal-item-cost');
+            if (rowCostEl) rowCostEl.textContent = alt.cost_text;
+            row.querySelector('.meal-item-protein').textContent = alt.protein + 'g';
+            row.querySelector('.meal-item-carbs').textContent = alt.carbs + 'g';
+            row.querySelector('.meal-item-calories').textContent = alt.calories;
+
+            row.dataset.cashPrice = alt.cash_price;
+
+            // Update the swap button's onclick with new values
+            const btn = row.querySelector('.btn-swap');
+            const safeItemName = alt.item.replace(/'/g, "\\'");
+            btn.setAttribute('onclick',
+                `openSwap('${swapDay}', ${swapIdx}, ${alt.calories}, ${alt.protein}, ${alt.carbs}, '${safeItemName}')`);
+
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+            swapModal.hide();
+            recalcTotals(swapDay);
+        }
+
+        function recalcTotals(day) {
+            // Recalculate day totals
+            const rows = document.querySelectorAll(`tr[data-day="${day}"]`);
+            let totalP = 0, totalC = 0, totalCal = 0, totalCash = 0, totalSwipes = 0;
+            rows.forEach(r => {
+                totalP += parseInt(r.querySelector('.meal-item-protein').textContent) || 0;
+                totalC += parseInt(r.querySelector('.meal-item-carbs').textContent) || 0;
+                totalCal += parseInt(r.querySelector('.meal-item-calories').textContent) || 0;
+
+                // Read from dataset.cashPrice if swapped, otherwise extract from the text or pass from server
+                const costCell = r.querySelector('.meal-item-cost');
+                let cellText = costCell ? costCell.textContent : "";
+                let cashValue = parseFloat(r.dataset.cashPrice);
+                if (isNaN(cashValue)) {
+                    // Try to extract from string like "1 Swipe | $12.00 ($7.80 DD)"
+                    let m = cellText.match(/\$([0-9\.]+)/);
+                    if (m) {
+                        cashValue = parseFloat(m[1]);
+                    } else {
+                        cashValue = 8.00; // default fallback
+                    }
+                }
+                totalCash += cashValue;
+                totalSwipes += 1;
+            });
+
+            const totalsRow = document.getElementById(`totals_${day}`);
+            if (totalsRow) {
+                totalsRow.querySelector('.total-protein').textContent = totalP + 'g';
+                totalsRow.querySelector('.total-carbs').textContent = totalC + 'g';
+                totalsRow.querySelector('.total-calories').textContent = totalCal;
+            }
+
+            // Update day header summary
+            const summary = document.getElementById(`summary_${day}`);
+            if (summary) {
+                summary.textContent = `${totalCal} cal · ${totalP}g protein · ${totalC}g carbs`;
+            }
+
+            // Recalculate all-week averages
+            recalcAvgs();
+        }
+
+        function recalcAvgs() {
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            let allP = 0, allC = 0, allCal = 0, count = 0;
+            days.forEach(day => {
+                const totalsRow = document.getElementById(`totals_${day}`);
+                if (totalsRow) {
+                    allP += parseInt(totalsRow.querySelector('.total-protein').textContent) || 0;
+                    allC += parseInt(totalsRow.querySelector('.total-carbs').textContent) || 0;
+                    allCal += parseInt(totalsRow.querySelector('.total-calories').textContent) || 0;
+                    count++;
+                }
+            });
+            if (count > 0) {
+                const ep = document.getElementById('avgProtein');
+                const ec = document.getElementById('avgCarbs');
+                const ecal = document.getElementById('avgCalories');
+                if (ep) ep.textContent = Math.round(allP / count) + 'g';
+                if (ec) ec.textContent = Math.round(allC / count) + 'g';
+                if (ecal) ecal.textContent = Math.round(allCal / count);
+            }
+
+            // Recalculate Grand Budget dynamically
+            {% if plan.budget %}
+            // Pass server-side limits back to JS
+            const PLAN_TYPE = '{{ plan.budget.plan_type }}';
+            // Use Jinja inline assignment to prevent Prettier from separating the braces
+            const SWIPES_ALLOWED = {{ '999999' if plan.budget.swipes_allowed == 'Unlimited' else plan.budget.swipes_allowed }};
+            const DD_WEEKLY_BUDGET = {{ plan.budget.dd_weekly_budget }};
+
+            let allCashValues = [];
+            const allRows = document.querySelectorAll(`tr[data-day]`);
+            allRows.forEach(r => {
+                const budgetCostCell = r.querySelector('.meal-item-cost');
+                let cellText = budgetCostCell ? budgetCostCell.textContent : "";
+                let cashValue = parseFloat(r.dataset.cashPrice);
+                if (isNaN(cashValue)) {
+                    let m = cellText.match(/\$([0-9\.]+)/);
+                    if (m) {
+                        cashValue = parseFloat(m[1]);
+                    } else {
+                        cashValue = 8.00;
+                    }
+                }
+                allCashValues.push(cashValue);
+            });
+
+            // Sort by cash price highest to lowest, allocating Swipes greedily
+            allCashValues.sort((a, b) => b - a);
+
+            let swipesUsed = 0;
+            let ddUsed = 0.0;
+
+            allCashValues.forEach(cash => {
+                if (swipesUsed < SWIPES_ALLOWED) {
+                    swipesUsed++;
+                } else {
+                    ddUsed += cash * 0.65;
+                }
+            });
+
+            let difference = DD_WEEKLY_BUDGET - ddUsed;
+
+            // Update the DOM
+            const uiSwipesUsed = document.getElementById('budgetSwipesUsed');
+            const uiDDUsed = document.getElementById('budgetDDUsed');
+            const uiDiff = document.getElementById('budgetDiff');
+            const uiDiffText = document.getElementById('budgetDiffText');
+
+            if (uiSwipesUsed) {
+                let limitText = SWIPES_ALLOWED === 999999 ? "Unlimited" : SWIPES_ALLOWED;
+                uiSwipesUsed.innerHTML = `${swipesUsed} <span class="fs-6 text-muted fw-normal">/ ${limitText}</span>`;
+                uiSwipesUsed.style.color = (swipesUsed > SWIPES_ALLOWED) ? 'var(--bs-danger)' : 'var(--bs-success)';
+            }
+            if (uiDDUsed) {
+                uiDDUsed.innerHTML = `$${ddUsed.toFixed(2)}`;
+                if (PLAN_TYPE === 'swipes') {
+                    // For swipe plans, ANY out of pocket DD is sub-optimal (warn or danger)
+                    if (ddUsed > DD_WEEKLY_BUDGET) {
+                        uiDDUsed.style.color = 'var(--bs-danger)';
+                    } else if (ddUsed > 0) {
+                        uiDDUsed.style.color = 'var(--bs-warning)';
+                    } else {
+                        uiDDUsed.style.color = 'var(--bs-success)';
+                    }
+                } else {
+                    // For DD-only plans, just check vs limit
+                    uiDDUsed.style.color = (ddUsed > DD_WEEKLY_BUDGET) ? 'var(--bs-danger)' : 'var(--bs-success)';
+                }
+            }
+            if (uiDiff) {
+                if (difference >= 0) {
+                    uiDiff.innerHTML = `+$${difference.toFixed(2)}`;
+                    uiDiff.className = "fs-4 fw-bold text-success";
+                    uiDiffText.innerHTML = "Under budget";
+                } else {
+                    uiDiff.innerHTML = `-$${Math.abs(difference).toFixed(2)}`;
+                    uiDiff.className = "fs-4 fw-bold text-danger";
+                    uiDiffText.innerHTML = "Over budget";
+                }
+            }
+            {% endif %}
+        }
+
+        function downloadPdf() {
+            var btn = document.getElementById('exportPdfBtn');
+            var orig = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Generating…';
+            fetch('/api/export-pdf')
+                .then(function(r) {
+                    if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'PDF export failed'); });
+                    return r.blob();
+                })
+                .then(function(blob) {
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'meal-plan.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                })
+                .catch(function(err) { alert(err.message); })
+                .finally(function() { btn.disabled = false; btn.textContent = orig; });
+        }
+    </script>
+</body>
+
+</html>

@@ -12,10 +12,12 @@ I'm always interested in new opportunities, exciting projects, and meaningful co
 ### 🔗 Professional Profiles
 - **LinkedIn**: [linkedin.com/in/ansh-pachauri](https://www.linkedin.com/in/ansh-pachauri)
 - **GitHub**: [github.com/anshpachauri23/Portfolio](https://github.com/anshpachauri23/Portfolio)
-- **Portfolio Website**: [personal-portfolio-tau-navy.vercel.app](https://personal-portfolio-tau-navy.vercel.app/)
+- **Portfolio Website**: [www.anshpachauri.com](https://www.anshpachauri.com/)
 
 ### 🌐 Live Project Demos
-- **Personal Portfolio**: [https://personal-portfolio-tau-navy.vercel.app/](https://personal-portfolio-tau-navy.vercel.app/)
+- **Personal Portfolio**: [https://www.anshpachauri.com/](https://www.anshpachauri.com/)
+- **BuckeyeMealPlanner**: [https://www.buckeyemealplanner.com](https://www.buckeyemealplanner.com)
+- **Tech Asset Portal**: [https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login](https://tech-asset-portal-frontend-387813478263.us-central1.run.app/login)
 - **RecipeShare - Social Recipe Network**: [https://recipe-social-media-personal.vercel.app/auth/login](https://recipe-social-media-personal.vercel.app/auth/login)
 - **JEAR E-commerce Platform**: [https://jear-ecommerce-cse-5234.vercel.app/](https://jear-ecommerce-cse-5234.vercel.app/)
 
